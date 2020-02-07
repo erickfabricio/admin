@@ -1,0 +1,62 @@
+<div class="div-list container">
+
+    <!-- New user -->
+    <div class="div-list-header">
+        <h2>Users
+            <span>
+                <button type="button" class="btn btn-outline-success"
+                    (click)="eventCrudEmitter('CREATE')">Create</button>
+            </span>
+        </h2>
+    </div>
+
+    <!-- Filter -->
+    <div class="div-list-filter">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        </mat-form-field>
+    </div>
+
+    <!-- List users -->
+    <div class="div-list-table mat-elevation-z8">
+
+        <table mat-table [dataSource]="dataSource" matSort class="table-hover">
+
+            <!-- # -->
+            <ng-container matColumnDef="#">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+                <td mat-cell *matCellDef="let user; let i = index">
+                    {{dataSource.filteredData.indexOf(user) + 1}}
+                </td>
+            </ng-container>
+
+            <!-- Name -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+            </ng-container>
+
+            <!-- Mail -->
+            <ng-container matColumnDef="mail">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail </th>
+                <td mat-cell *matCellDef="let user"> {{user.mail}} </td>
+            </ng-container>
+        
+            <!-- State -->
+            <ng-container matColumnDef="state">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+                <td mat-cell *matCellDef="let user"> {{user.state}} </td>
+            </ng-container>
+
+            <!-- Header Table -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let user; columns: displayedColumns" (click)="eventCrudEmitter('CRUD', user)"></tr>
+
+        </table>
+
+        <!-- Paginator -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </div>
+
+</div>

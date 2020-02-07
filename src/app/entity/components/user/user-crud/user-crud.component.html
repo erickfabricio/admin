@@ -1,0 +1,111 @@
+<div class="div-crud container">
+
+    <!-- HEADER -->
+    <div class="div-crud-header">
+        <h4 [ngSwitch]="action">
+
+            {{title}}
+
+            <span *ngSwitchCase="'CREATE'">
+                <button type="button" class="btn btn-outline-success" (click)="onCreate()">Create</button>
+            </span>
+
+            <span *ngSwitchCase="'CRUD'">
+                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()">Update</button>
+
+                <button type="button" class="btn btn-outline-danger" (click)="onDelete()">Delete</button>
+            </span>
+
+        </h4>
+    </div>
+
+    <!-- BODY -->
+    <div class="div-crud-form">
+        <form [formGroup]="form" [style.fontSize.px]=15>
+
+            <!-- id -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.id">
+                <mat-form-field>
+                    <input matInput placeholder="Id" title="Id" type="text" formControlName="id">
+                </mat-form-field>
+            </div>
+
+            <!-- name -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.name">
+                <mat-form-field>
+                    <input matInput placeholder="Name" title="Name" #inputName type="text" formControlName="name"
+                        maxlength="100">
+                    <mat-error *ngIf="form.get('name').invalid">{{getErrorMessageName()}}</mat-error>
+                    <mat-hint align="end">{{inputName.value?.length || 0}}/100</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- mail -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.mail">
+                <mat-form-field>
+                    <input matInput placeholder="Mail" title="Mail" #inputMail type="text" formControlName="mail">
+                    <mat-error *ngIf="form.get('mail').invalid">{{getErrorMessageMail()}}</mat-error>
+                    <mat-hint align="end">{{inputMail.value?.length || 0}}/100</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- password -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.password">
+                <mat-form-field>
+                    <input matInput placeholder="Password" title="Password" [type]="hide ? 'password' : 'text'"
+                        formControlName="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="form.get('password').invalid">{{getErrorMessagePassword()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- description -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.description">
+                <mat-form-field>
+                    <textarea matInput placeholder="Description" title="Description" #inputDescription
+                        formControlName="description" maxlength="100"></textarea>
+                    <mat-error *ngIf="form.get('description').invalid">{{getErrorMessageDescription()}}</mat-error>
+                    <mat-hint align="end">{{inputDescription.value?.length || 0}}/100</mat-hint>
+                </mat-form-field>
+            </div>
+
+
+            <!-- date -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.creationDate">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Date" title="Date"
+                        formControlName="creationDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <!-- state -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.state">
+                <mat-form-field>
+                    <mat-select placeholder="Select" title="State" formControlName="state">
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="Inactive">Inactive</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- role -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.role">
+                <mat-form-field>
+                    <mat-select placeholder="Role" title="Role" formControlName="role">
+                        <mat-option *ngFor="let role of roles" [value]=role._id>
+                            {{role.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('role').invalid">{{getErrorMessageRole()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+        </form>
+    </div>
+
+</div>

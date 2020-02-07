@@ -1,0 +1,31 @@
+::ng-deep .login-container {
+    max-width: 400px;
+    text-align: center;
+    margin: 30px;
+    align-items: center;    
+}
+
+::ng-deep .login-header.login-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ALERTS - Snackbar */
+
+::ng-deep .snackbar-success {
+    color: #008000;
+    background-color: #ffffff;
+}
+
+::ng-deep .snackbar-warning {
+    color: #ff0000;
+    background-color: #ffffff;
+}
+
+::ng-deep .snackbar-danger {
+    color: #ff0000;
+    background-color: #ffffff;
+}
+
+/*PRUEBA*/

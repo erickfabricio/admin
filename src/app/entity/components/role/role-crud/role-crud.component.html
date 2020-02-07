@@ -1,0 +1,138 @@
+<div class="div-crud container">
+
+    <!-- HEADER -->
+    <div class="div-crud-header">
+        <h4 [ngSwitch]="action">
+
+            {{title}}
+
+            <span *ngSwitchCase="'CREATE'">
+                <button type="button" class="btn btn-outline-success" (click)="onCreate()">Create</button>
+            </span>
+
+            <span *ngSwitchCase="'CRUD'">
+                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()">Update</button>
+
+                <button type="button" class="btn btn-outline-danger" (click)="onDelete()">Delete</button>
+            </span>
+
+        </h4>
+    </div>
+
+    <!-- BODY -->
+    <div class="div-crud-form">
+        <form [formGroup]="form" [style.fontSize.px]=15>
+
+            <!-- id -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.id">
+                <mat-form-field>
+                    <input matInput placeholder="Id" title="Id" type="text" formControlName="id">
+                </mat-form-field>
+            </div>
+
+            <!-- name -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.name">
+                <mat-form-field>
+                    <input matInput placeholder="Name" title="Name" #inputName type="text" formControlName="name"
+                        maxlength="100">
+                    <mat-error *ngIf="form.get('name').invalid">{{getErrorMessageName()}}</mat-error>
+                    <mat-hint align="end">{{inputName.value?.length || 0}}/100</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- description -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.description">
+                <mat-form-field>
+                    <textarea matInput placeholder="Description" title="Description" #inputDescription
+                        formControlName="description" maxlength="100"></textarea>
+                    <mat-error *ngIf="form.get('description').invalid">{{getErrorMessageDescription()}}</mat-error>
+                    <mat-hint align="end">{{inputDescription.value?.length || 0}}/100</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- state -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.state">
+                <mat-form-field>
+                    <mat-select placeholder="Select" title="State" formControlName="state">
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="Inactive">Inactive</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- creationDate -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.creationDate">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Date" title="Date"
+                        formControlName="creationDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+        
+
+        <!-- Privilege collections -->
+        <div class="div-list-table mat-elevation-z8">
+
+            <table mat-table [dataSource]="dataSource" matSort class="table-hover">
+
+                <!-- Collection -->
+                <ng-container matColumnDef="collection">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Collection </th>
+                    <td mat-cell *matCellDef="let privilegeCollectionModel"> {{privilegeCollectionModel.name}} </td>
+                </ng-container>
+
+                <!-- View -->
+                <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> View </th>
+                    <td mat-cell *matCellDef="let privilegeCollectionModel">
+                        <mat-checkbox #checkboxView [checked]="privilegeCollectionModel.view"
+                            (change)="changePrivilegeCollection('view', privilegeCollectionModel, checkboxView.checked)">
+                            View
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Edit -->
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
+                    <td mat-cell *matCellDef="let privilegeCollectionModel">
+                        <mat-checkbox #checkboxEdit [checked]="privilegeCollectionModel.edit"
+                            (change)="changePrivilegeCollection('edit', privilegeCollectionModel, checkboxEdit.checked)">
+                            Edit
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Delete -->
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+                    <td mat-cell *matCellDef="let privilegeCollectionModel">
+                        <mat-checkbox #checkboxDelete [checked]="privilegeCollectionModel.delete"
+                            (change)="changePrivilegeCollection('delete', privilegeCollectionModel, checkboxDelete.checked)">
+                            Delete
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Header Table -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let privilegeCollectionModel; columns: displayedColumns;">
+                </tr>
+
+            </table>
+
+            <!-- Paginator -->
+            <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

@@ -1,0 +1,69 @@
+<mat-card class="sign-up-container container">
+
+    <!-- HEADER -->
+    <mat-card-header class="sign-up-header">
+        <mat-card-title>Sign up</mat-card-title>
+    </mat-card-header>
+
+    <!-- BODY -->
+    <mat-card-content class="sign-up-body">
+
+        <form [formGroup]="form">
+
+            <!-- name -->
+            <div class="div-sign-up-form-input input-container">
+                <mat-form-field>
+                    <input matInput placeholder="Name" title="Name" #inputName type="text" formControlName="name"
+                        maxlength="50">
+                    <mat-error *ngIf="form.get('name').invalid">{{getErrorMessageName()}}</mat-error>
+                    <mat-hint align="end">{{inputName.value?.length || 0}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- mail -->
+            <div class="div-sign-up-form-input input-container">
+                <mat-form-field>
+                    <input matInput placeholder="Mail" title="Mail" #inputMail type="text" formControlName="mail"
+                        maxlength="50">
+                    <mat-error *ngIf="form.get('mail').invalid">{{getErrorMessageMail()}}</mat-error>
+                    <mat-hint align="end">{{inputMail.value?.length || 0}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- password -->
+            <div class="div-sign-up-form-input input-container">
+                <mat-form-field>
+                    <input matInput placeholder="Password" title="Password" [type]="hide ? 'password' : 'text'"
+                        formControlName="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="form.get('password').invalid">{{getErrorMessagePassword()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- confirm password -->
+            <div class="div-sign-up-form-input input-container">
+                <mat-form-field>
+                    <input matInput placeholder="Confirm password" title="Confirm password"
+                        [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="form.get('confirmPassword').invalid">{{getErrorMessageConfirmPassword()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+    </mat-card-content>
+
+    <!-- FOOTER -->
+    <mat-card-actions class="sign-up-footer">
+        <button mat-button (click)="signUp()">Sign up</button>
+    </mat-card-actions>
+
+</mat-card>
