@@ -13,4 +13,10 @@ export class PrivilegeCollectionModel extends EntityModel {
         }
     }
 
+    static validatePrivileges(pc: PrivilegeCollectionModel): void {
+        if (pc.edit || pc.delete) {
+            pc.view = true;
+        }
+    }
+
 }

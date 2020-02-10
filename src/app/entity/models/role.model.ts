@@ -22,4 +22,10 @@ export class RoleModel extends EntityModel {
         }
     }
 
+    static validatePrivileges(r : RoleModel): void {
+        for (let pc of r.privileges.collections) {
+            PrivilegeCollectionModel.validatePrivileges(pc);            
+        }
+    }
+
 }

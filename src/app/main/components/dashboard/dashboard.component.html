@@ -16,16 +16,16 @@
 
             <mat-nav-list>
 
-                <!-- Collection -->
-                <button mat-list-item (click)="viewOption('Collection')">
-                    <mat-icon color="primary">collections_bookmark</mat-icon>Collections
-                </button>
-
                 <!-- Module -->
                 <button mat-list-item (click)="viewOption('Module')">
                     <mat-icon color="primary">view_module</mat-icon>Modules
                 </button>
 
+                <!-- Collection -->
+                <button mat-list-item (click)="viewOption('Collection')">
+                    <mat-icon color="primary">collections_bookmark</mat-icon>Collections
+                </button>
+                
                 <!-- Roles -->
                 <button mat-list-item (click)="viewOption('Role')">
                     <mat-icon color="primary">control_camera</mat-icon>Roles
@@ -47,14 +47,14 @@
 
         <mat-sidenav-content [ngSwitch]="option">            
             
-            <admin-entity-collection-main *ngSwitchCase="'Collection'"></admin-entity-collection-main>
             <admin-entity-module-main *ngSwitchCase="'Module'"></admin-entity-module-main>
+            <admin-entity-collection-main *ngSwitchCase="'Collection'"></admin-entity-collection-main>            
             <admin-entity-role-main *ngSwitchCase="'Role'"></admin-entity-role-main>
             <admin-entity-user-main *ngSwitchCase="'User'"></admin-entity-user-main>
             <admin-entity-main *ngSwitchCase="'Entity'"></admin-entity-main>
 
             <!-- Default -->
-            <admin-entity-user-main *ngSwitchDefault></admin-entity-user-main>
+            <admin-entity-role-main *ngSwitchDefault></admin-entity-role-main>
 
         </mat-sidenav-content>
 

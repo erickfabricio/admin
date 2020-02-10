@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
+import { PrivilegeModuleModel } from 'src/app/entity/models/privilege.module.model';
 
 
 @Component({
@@ -37,8 +38,11 @@ export class RoleCrudComponent implements OnInit {
 
   panelOpenState = false;
 
-  //Lists
+  //Modules
   modules: ModuleModel[];
+  displayedColumnsModule: string[];
+  dataSourceModule: MatTableDataSource<PrivilegeModuleModel>;
+  privilegeModuleList: PrivilegeModuleModel[];
 
   //Collections
   collections: CollectionModel[];
@@ -62,6 +66,10 @@ export class RoleCrudComponent implements OnInit {
     this.createForm();
 
     //Modules
+    this.displayedColumnsModule = ['module', 'access'];
+    this.dataSourceModule = new MatTableDataSource<PrivilegeModuleModel>();
+    this.dataSourceModule.paginator = this.paginator;
+    this.dataSourceModule.sort = this.sort;
     this.findModule();
 
     //Collections
@@ -93,16 +101,29 @@ export class RoleCrudComponent implements OnInit {
       .subscribe(collections => { this.collections = <CollectionModel[]>collections });
   }
 
-  getPrivilegeCollection() {
+  getPrivilege() {
 
+    this.privilegeModuleList = [];
     this.privilegeCollectionList = [];
 
     //Compare
     switch (this.action) {
 
       case "CREATE":
+
+        //Modules
+        this.modules.forEach(module => {
+          let privilegeModuleItem: PrivilegeModuleModel = new PrivilegeModuleModel();
+          privilegeModuleItem._id = module._id;
+          privilegeModuleItem.name = module.name;
+          privilegeModuleItem.access = false;
+          this.privilegeModuleList.push(privilegeModuleItem);
+        });
+
+        //Collections
         this.collections.forEach(collection => {
           let privilegeCollectionItem: PrivilegeCollectionModel = new PrivilegeCollectionModel();
+          privilegeCollectionItem._id = collection._id;
           privilegeCollectionItem.name = collection.name;
           privilegeCollectionItem.view = false;
           privilegeCollectionItem.edit = false;
@@ -112,11 +133,43 @@ export class RoleCrudComponent implements OnInit {
         break;
 
       case "CRUD":
+
+        //Modules
+        this.modules.forEach(module => {
+
+          let pm: PrivilegeModuleModel;
+          let privilegeModuleItem: PrivilegeModuleModel = new PrivilegeModuleModel();
+
+          try {
+            
+            pm = this.role.privileges.modules.find(privilegeModule => privilegeModule._id == module._id);
+            privilegeModuleItem._id = module._id;
+            privilegeModuleItem.name = module.name;
+
+            if (pm) {
+              privilegeModuleItem.access = pm.access;
+            } else {
+              privilegeModuleItem.access = false;
+            }
+            
+          } catch (ex) {
+            console.log("No se puedo encontrar modulo:" + module.name);
+            privilegeModuleItem.name = module.name;
+            privilegeModuleItem.access = false;
+            //console.log(ex);
+          }
+
+          this.privilegeModuleList.push(privilegeModuleItem);
+
+        });
+
+        //Collections
         this.collections.forEach(collection => {
 
-          let pc: PrivilegeCollectionModel = this.role.privileges.collections.find(privilegeCollection => privilegeCollection.name == collection.name);
+          let pc: PrivilegeCollectionModel = this.role.privileges.collections.find(privilegeCollection => privilegeCollection._id == collection._id);
 
           let privilegeCollectionItem: PrivilegeCollectionModel = new PrivilegeCollectionModel();
+          privilegeCollectionItem._id = collection._id;
           privilegeCollectionItem.name = collection.name;
 
           if (pc) {
@@ -135,26 +188,33 @@ export class RoleCrudComponent implements OnInit {
         break;
     }
 
-    console.log(this.privilegeCollectionList);
+    //console.log(this.privilegeModuleList);
+    this.dataSourceModule.data = this.privilegeModuleList;
+
+    //console.log(this.privilegeCollectionList);
     this.dataSource.data = this.privilegeCollectionList;
   }
 
   changePrivilegeCollection(option: string, privilegeCollectionModel: PrivilegeCollectionModel, value: boolean) {
-    
+
     switch (option) {
-      case "view":        
+      case "view":
         privilegeCollectionModel.view = value;
         break;
       case "edit":
-          privilegeCollectionModel.edit = value;
+        privilegeCollectionModel.edit = value;
         break;
       case "delete":
-          privilegeCollectionModel.delete = value;
+        privilegeCollectionModel.delete = value;
         break;
     }
 
     console.log(privilegeCollectionModel);
+  }
 
+  changePrivilegeModule(privilegeModuleModel: PrivilegeModuleModel, value: boolean) {
+    privilegeModuleModel.access = value;
+    //console.log(privilegeModuleModel);
   }
 
   show() {
@@ -167,7 +227,7 @@ export class RoleCrudComponent implements OnInit {
         this.crud();
         break;
     }
-    this.getPrivilegeCollection();
+    this.getPrivilege();
   }
 
   //************ FORM ************//
@@ -198,14 +258,14 @@ export class RoleCrudComponent implements OnInit {
       creationDate: true
     }
 
-    console.log(this.role);
+    //console.log(this.role);
 
   }
 
   //************ ACTIONS OF FORM ************//
 
   onCreate() {
-        
+
     if (this.form.valid) {
 
       //Assignment of values
@@ -215,8 +275,8 @@ export class RoleCrudComponent implements OnInit {
       this.role.state = String(this.form.get('state').value).trim();
 
       let privileges = {
-        collections: this.privilegeCollectionList,
-        modules: null
+        modules: this.privilegeModuleList,
+        collections: this.privilegeCollectionList        
       };
 
       this.role.privileges = privileges;
@@ -230,7 +290,7 @@ export class RoleCrudComponent implements OnInit {
       let succesMessage = "New role: " + this.role.name;
       this.openSnackBar(succesMessage, "X", "snackbar-success");
       this.createForm();
-      this.getPrivilegeCollection();
+      this.getPrivilege();
     } else {
       //Error
       let errorMessage = "¡Invalid form, " + this.validateForm() + "!";
@@ -247,12 +307,14 @@ export class RoleCrudComponent implements OnInit {
       this.role.state = String(this.form.get('state').value).trim();
 
       let privileges = {
-        collections: this.privilegeCollectionList,
-        modules: null
+        modules: this.privilegeModuleList,
+        collections: this.privilegeCollectionList
       };
 
       this.role.privileges = privileges;
-      this.role.validatePrivileges();
+
+      RoleModel.validatePrivileges(this.role);
+      //this.role.validatePrivileges();
 
       //Api 
       this.entityService.update(RoleModel.entity, this.role)
