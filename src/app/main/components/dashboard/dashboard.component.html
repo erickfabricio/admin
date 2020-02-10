@@ -17,27 +17,27 @@
             <mat-nav-list>
 
                 <!-- Module -->
-                <button mat-list-item (click)="viewOption('Module')">
+                <button mat-list-item (click)="viewOption('Modules')">
                     <mat-icon color="primary">view_module</mat-icon>Modules
                 </button>
 
                 <!-- Collection -->
-                <button mat-list-item (click)="viewOption('Collection')">
+                <button mat-list-item (click)="viewOption('Collections')">
                     <mat-icon color="primary">collections_bookmark</mat-icon>Collections
                 </button>
                 
                 <!-- Roles -->
-                <button mat-list-item (click)="viewOption('Role')">
+                <button mat-list-item (click)="viewOption('Roles')">
                     <mat-icon color="primary">control_camera</mat-icon>Roles
                 </button>
                 
                 <!-- User -->
-                <button mat-list-item (click)="viewOption('User')">
+                <button mat-list-item (click)="viewOption('Users')">
                     <mat-icon color="primary">supervised_user_circle</mat-icon>Users
                 </button>
 
                 <!-- Entity -->
-                <button mat-list-item (click)="viewOption('Entity')">
+                <button mat-list-item (click)="viewOption('Entities')">
                     <mat-icon color="primary">assignment</mat-icon>Entities
                 </button>
 
@@ -47,11 +47,11 @@
 
         <mat-sidenav-content [ngSwitch]="option">            
             
-            <admin-entity-module-main *ngSwitchCase="'Module'"></admin-entity-module-main>
-            <admin-entity-collection-main *ngSwitchCase="'Collection'"></admin-entity-collection-main>            
-            <admin-entity-role-main *ngSwitchCase="'Role'"></admin-entity-role-main>
-            <admin-entity-user-main *ngSwitchCase="'User'"></admin-entity-user-main>
-            <admin-entity-main *ngSwitchCase="'Entity'"></admin-entity-main>
+            <admin-entity-module-main *ngSwitchCase="'Modules'"></admin-entity-module-main>
+            <admin-entity-collection-main *ngSwitchCase="'Collections'"></admin-entity-collection-main>            
+            <admin-entity-role-main *ngSwitchCase="'Roles'"></admin-entity-role-main>
+            <admin-entity-user-main *ngSwitchCase="'Users'"></admin-entity-user-main>
+            <admin-entity-main *ngSwitchCase="'Entities'"></admin-entity-main>
 
             <!-- Default -->
             <admin-entity-role-main *ngSwitchDefault></admin-entity-role-main>

@@ -39,4 +39,11 @@ export class SessionService {
     //this.router.navigate(['login']);
   }
 
+  /*
+  getPrivileges(entity: string): Observable<EntityModel[]> {    
+    return this.http.get<EntityModel[]>(`${environment.api}/${entity}`, this.options).pipe(
+      map(data => data.map(data => new EntityModel().deserialize(data)))
+    );
+  }*/
+
 }
