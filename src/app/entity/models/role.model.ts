@@ -8,9 +8,7 @@ export class RoleModel extends EntityModel {
 
     name: string;
     description: string;
-    creationDate: Date;
-    state: string;
-
+    
     privileges: {
         collections: PrivilegeCollectionModel[],
         modules: PrivilegeModuleModel[]

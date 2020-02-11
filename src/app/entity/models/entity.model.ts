@@ -1,6 +1,8 @@
 export class EntityModel {
 
     _id: string;
+    creationDate: Date;
+    state: string;
     
     constructor(){
     }

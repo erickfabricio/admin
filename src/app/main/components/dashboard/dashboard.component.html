@@ -36,6 +36,26 @@
                     <mat-icon color="primary">supervised_user_circle</mat-icon>Users
                 </button>
 
+                <!-- App -->
+                <button mat-list-item (click)="viewOption('Apps')">
+                    <mat-icon color="primary">apps</mat-icon>Apps
+                </button>
+
+                <!-- Token -->
+                <button mat-list-item (click)="viewOption('Tokens')">
+                    <mat-icon color="primary">fingerprint</mat-icon>Tokens
+                </button>
+
+                <!-- Log -->
+                <button mat-list-item (click)="viewOption('Logs')">
+                    <mat-icon color="primary">find_in_page</mat-icon>Logs
+                </button>
+
+                <!-- Data -->
+                <button mat-list-item (click)="viewOption('Data')">
+                    <mat-icon color="primary">storage</mat-icon>Data
+                </button>
+
                 <!-- Entity -->
                 <button mat-list-item (click)="viewOption('Entities')">
                     <mat-icon color="primary">assignment</mat-icon>Entities
@@ -51,6 +71,12 @@
             <admin-entity-collection-main *ngSwitchCase="'Collections'"></admin-entity-collection-main>            
             <admin-entity-role-main *ngSwitchCase="'Roles'"></admin-entity-role-main>
             <admin-entity-user-main *ngSwitchCase="'Users'"></admin-entity-user-main>
+
+            <admin-entity-app-main *ngSwitchCase="'Apps'"></admin-entity-app-main>
+            <admin-entity-token-main *ngSwitchCase="'Tokens'"></admin-entity-token-main>
+            <admin-entity-log-main *ngSwitchCase="'Logs'"></admin-entity-log-main>
+            <admin-entity-data-main *ngSwitchCase="'Data'"></admin-entity-data-main>
+
             <admin-entity-main *ngSwitchCase="'Entities'"></admin-entity-main>
 
             <!-- Default -->

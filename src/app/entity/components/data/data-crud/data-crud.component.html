@@ -1,0 +1,55 @@
+<div class="div-crud container">
+
+    <!-- HEADER -->
+    <div class="div-crud-header">
+        <h4 [ngSwitch]="action">
+
+            {{title}}
+
+            <span *ngSwitchCase="'CREATE'">
+                <button type="button" class="btn btn-outline-success" (click)="onCreate()">Create</button>
+            </span>
+
+            <span *ngSwitchCase="'CRUD'">
+                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()">Update</button>
+                   
+                <button type="button" class="btn btn-outline-danger" (click)="onDelete()">Delete</button>
+            </span>
+
+        </h4>
+    </div>
+
+    <!-- BODY -->
+    <div class="div-crud-form">
+        <form [formGroup]="form" [style.fontSize.px]=15>
+
+            <!-- id -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.id">
+                <mat-form-field>
+                    <input matInput placeholder="Id" title="Id" type="text" formControlName="id">
+                </mat-form-field>
+            </div>
+            
+            <!-- state -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.state">
+                <mat-form-field>
+                    <mat-select placeholder="Select" title="State" formControlName="state">                        
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="Inactive">Inactive</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- creationDate -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.creationDate">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Date" title="Date" formControlName="creationDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+                                                            
+        </form>
+    </div>
+
+</div>

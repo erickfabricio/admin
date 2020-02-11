@@ -5,8 +5,6 @@ export class CollectionModel extends EntityModel {
     static entity: string = "collections";
         
     name: string;
-    description: string;
-    creationDate: Date;
-    state: string;
+    description: string;    
 
 }

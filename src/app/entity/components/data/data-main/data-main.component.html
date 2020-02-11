@@ -1,0 +1,18 @@
+<!-- Tags -->
+<mat-tab-group mat-align-tabs="start" #tabGroup (selectedTabChange)="onChangeTab($event)"
+    [ngClass]="{'header-less-tabs': view == 'LIST'}">
+
+
+    <mat-tab label="List" #tabList select>
+        <div class="container-mat-tab">
+            <admin-entity-data-list #list></admin-entity-data-list>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="" #tabCrud disabled>
+        <div class="container-mat-tab">
+            <admin-entity-data-crud #crud></admin-entity-data-crud>
+        </div>
+    </mat-tab>
+
+</mat-tab-group>

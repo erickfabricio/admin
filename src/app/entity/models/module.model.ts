@@ -5,8 +5,6 @@ export class ModuleModel extends EntityModel {
     static entity: string = "modules";
         
     name: string;        
-    description: string;
-    creationDate: Date;
-    state: string;    
+    description: string;    
 
 }

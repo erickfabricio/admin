@@ -1,0 +1,22 @@
+.div-crud-header {
+    text-align: center;
+}
+
+::ng-deep .info-tooltip {
+    background: #000000;
+}
+
+::ng-deep .snackbar-success {
+    color:#008000;
+    background-color: #ffffff;
+}
+
+::ng-deep .snackbar-warning {
+    color: #ff0000;
+    background-color: #ffffff;
+}
+
+::ng-deep .snackbar-danger {
+    color: #ff0000;
+    background-color: #ffffff;
+}

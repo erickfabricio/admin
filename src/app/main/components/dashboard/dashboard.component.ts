@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { EntityService } from 'src/app/entity/services/entity.service';
 import { RoleModel } from 'src/app/entity/models/role.model';
 import { UserModel } from 'src/app/entity/models/user.model';
-
+//const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
 
 @Component({
   selector: 'mail-main-dashboard',
@@ -13,7 +14,7 @@ import { UserModel } from 'src/app/entity/models/user.model';
 export class DashboardComponent implements OnDestroy {
 
   option: string;
-  
+
   mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
@@ -29,7 +30,7 @@ export class DashboardComponent implements OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.option = "main";
 
-
+    /*
     //User
     let userJSON = JSON.parse(localStorage.getItem("user"));
     this.user = new UserModel();
@@ -48,6 +49,9 @@ export class DashboardComponent implements OnDestroy {
     
     this.showModules = this.role.privileges.modules.find(r => r.name = "Modules").access;
     console.log(this.showModules);
+    */
+
+    this.getInfo();
 
   }
 
@@ -55,7 +59,7 @@ export class DashboardComponent implements OnDestroy {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  viewOption(option: string){
+  viewOption(option: string) {
     this.option = option;
     //console.log(this.option);
   }
@@ -66,7 +70,21 @@ export class DashboardComponent implements OnDestroy {
     this.entityService.find(RoleModel.entity)
       .subscribe(role => { console.log(collections); this.role = <CollectionModel[]>collections; this.dataSource.data = this.collections });
   }*/
-  
+
+  getInfo() {
+
+    let token = localStorage.getItem("token");
+    let key = localStorage.getItem("key");
+
+    /*
+    jwt.verify(token, key, function (err, info) {
+      if (err) {
+        return { ok: false, err: err };
+      }else{
+        console.log(info);
+      }      
+    });*/
+  }
 
 }
 

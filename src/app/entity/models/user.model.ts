@@ -7,9 +7,7 @@ export class UserModel extends EntityModel {
     name: string;    
     mail: string;
     password: string;
-    description: string;
-    creationDate: Date;
-    state: string;
+    description: string;    
     role: string;
 
 }

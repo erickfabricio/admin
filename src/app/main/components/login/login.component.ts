@@ -46,9 +46,11 @@ export class LoginComponent implements OnInit {
           //let succesMessage = resp.menssage + " token: " + resp.token;
           //this.openSnackBar(succesMessage, "X", "snackbar-success");
 
+          //localStorage.setItem("tokenId", resp.tokenId);
           localStorage.setItem("token", resp.token);
-          localStorage.setItem("user", JSON.stringify(resp.user));
-          localStorage.setItem("role", JSON.stringify(resp.role));          
+          localStorage.setItem("key", resp.key);
+          //localStorage.setItem("user", JSON.stringify(resp.user));
+          //localStorage.setItem("role", JSON.stringify(resp.role));          
           
           //Dashboard
           this.router.navigate(['dashboard']);
