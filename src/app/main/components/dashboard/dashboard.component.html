@@ -1,12 +1,51 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
 
+
     <mat-toolbar color="primary" class="example-toolbar">
+
+        <!-- Lateral Menu -->
 
         <button mat-icon-button (click)="snav.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
+
+
+        <!-- Title -->
         <h1 class="example-app-name">API Management System</h1>
-       
+        <span class="example-spacer"></span>
+
+
+        <!-- User Menu -->
+        <div class="example-icon" aria-hidden="false">
+
+            <button id="button-user-menu" mat-icon-button [matMenuTriggerFor]="menu" aria-label="User Menu">
+                <mat-icon class="mat-icon-user-menu">account_circle</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+                
+                <span mat-menu-item>Signed in as {{user.name}}</span>
+                <mat-divider></mat-divider>
+
+                <button mat-menu-item>
+                    <mat-icon>perm_identity</mat-icon>
+                    <span>Profile</span>
+                </button>
+
+                <button mat-menu-item>
+                    <mat-icon>help_outline</mat-icon>
+                    <span>Help</span>
+                </button>
+
+                <button mat-menu-item (click)="signOut()">
+                    <mat-icon>lock_open</mat-icon>
+                    <span>Sign out</span>
+                </button>
+
+            </mat-menu>
+
+        </div>
+
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -17,47 +56,47 @@
             <mat-nav-list>
 
                 <!-- Module -->
-                <button mat-list-item (click)="viewOption('Modules')">
+                <button mat-list-item (click)="viewOption('ADM-Modules')" *ngIf="isAccessModule('ADM-Modules')">
                     <mat-icon color="primary">view_module</mat-icon>Modules
                 </button>
 
                 <!-- Collection -->
-                <button mat-list-item (click)="viewOption('Collections')">
+                <button mat-list-item (click)="viewOption('ADM-Collections')" *ngIf="isAccessModule('ADM-Collections')">
                     <mat-icon color="primary">collections_bookmark</mat-icon>Collections
                 </button>
-                
+
                 <!-- Roles -->
-                <button mat-list-item (click)="viewOption('Roles')">
+                <button mat-list-item (click)="viewOption('ADM-Roles')" *ngIf="isAccessModule('ADM-Roles')">
                     <mat-icon color="primary">control_camera</mat-icon>Roles
                 </button>
-                
+
                 <!-- User -->
-                <button mat-list-item (click)="viewOption('Users')">
+                <button mat-list-item (click)="viewOption('ADM-Users')" *ngIf="isAccessModule('ADM-Users')">
                     <mat-icon color="primary">supervised_user_circle</mat-icon>Users
                 </button>
 
                 <!-- App -->
-                <button mat-list-item (click)="viewOption('Apps')">
+                <button mat-list-item (click)="viewOption('ADM-Apps')" *ngIf="isAccessModule('ADM-Apps')">
                     <mat-icon color="primary">apps</mat-icon>Apps
                 </button>
 
                 <!-- Token -->
-                <button mat-list-item (click)="viewOption('Tokens')">
+                <button mat-list-item (click)="viewOption('ADM-Tokens')" *ngIf="isAccessModule('ADM-Tokens')">
                     <mat-icon color="primary">fingerprint</mat-icon>Tokens
                 </button>
 
                 <!-- Log -->
-                <button mat-list-item (click)="viewOption('Logs')">
+                <button mat-list-item (click)="viewOption('ADM-Logs')" *ngIf="isAccessModule('ADM-Logs')">
                     <mat-icon color="primary">find_in_page</mat-icon>Logs
                 </button>
 
                 <!-- Data -->
-                <button mat-list-item (click)="viewOption('Data')">
+                <button mat-list-item (click)="viewOption('ADM-Data')" *ngIf="isAccessModule('ADM-Data')">
                     <mat-icon color="primary">storage</mat-icon>Data
                 </button>
 
                 <!-- Entity -->
-                <button mat-list-item (click)="viewOption('Entities')">
+                <button mat-list-item (click)="viewOption('ADM-Entities')" *ngIf="isAccessModule('ADM-Entities')">
                     <mat-icon color="primary">assignment</mat-icon>Entities
                 </button>
 
@@ -65,19 +104,19 @@
 
         </mat-sidenav>
 
-        <mat-sidenav-content [ngSwitch]="option">            
-            
-            <admin-entity-module-main *ngSwitchCase="'Modules'"></admin-entity-module-main>
-            <admin-entity-collection-main *ngSwitchCase="'Collections'"></admin-entity-collection-main>            
-            <admin-entity-role-main *ngSwitchCase="'Roles'"></admin-entity-role-main>
-            <admin-entity-user-main *ngSwitchCase="'Users'"></admin-entity-user-main>
+        <mat-sidenav-content [ngSwitch]="option">
 
-            <admin-entity-app-main *ngSwitchCase="'Apps'"></admin-entity-app-main>
-            <admin-entity-token-main *ngSwitchCase="'Tokens'"></admin-entity-token-main>
-            <admin-entity-log-main *ngSwitchCase="'Logs'"></admin-entity-log-main>
-            <admin-entity-data-main *ngSwitchCase="'Data'"></admin-entity-data-main>
+            <admin-entity-module-main *ngSwitchCase="'ADM-Modules'"></admin-entity-module-main>
+            <admin-entity-collection-main *ngSwitchCase="'ADM-Collections'"></admin-entity-collection-main>
+            <admin-entity-role-main *ngSwitchCase="'ADM-Roles'"></admin-entity-role-main>
+            <admin-entity-user-main *ngSwitchCase="'ADM-Users'"></admin-entity-user-main>
 
-            <admin-entity-main *ngSwitchCase="'Entities'"></admin-entity-main>
+            <admin-entity-app-main *ngSwitchCase="'ADM-Apps'"></admin-entity-app-main>
+            <admin-entity-token-main *ngSwitchCase="'ADM-Tokens'"></admin-entity-token-main>
+            <admin-entity-log-main *ngSwitchCase="'ADM-Logs'"></admin-entity-log-main>
+            <admin-entity-data-main *ngSwitchCase="'ADM-Data'"></admin-entity-data-main>
+
+            <admin-entity-main *ngSwitchCase="'ADM-Entities'"></admin-entity-main>
 
             <!-- Default -->
             <admin-entity-role-main *ngSwitchDefault></admin-entity-role-main>

@@ -19,6 +19,20 @@ export class SessionService {
     return this.http.post(`http://localhost:3000/api/session/login`, user);
   }
 
+  signOut(): Observable<any> {
+    
+    let headers: HttpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Authorization': 'Bearer ' + localStorage.getItem("token")
+    });
+
+    let options = {
+      headers: headers
+    };
+        
+    return this.http.post(`http://localhost:3000/api/session/signout`, null, options);
+  }
+
   validate(): Observable<any> {
     
     let headers: HttpHeaders = new HttpHeaders({
@@ -30,20 +44,8 @@ export class SessionService {
       headers: headers
     };
         
-    return this.http.get(`http://localhost:3000/api/session/validate`, options);
+    return this.http.post(`http://localhost:3000/api/session/validate`, null, options);
   }
 
-  signOut(user: UserModel) {
-    localStorage.removeItem('token');
-    //Login
-    //this.router.navigate(['login']);
-  }
-
-  /*
-  getPrivileges(entity: string): Observable<EntityModel[]> {    
-    return this.http.get<EntityModel[]>(`${environment.api}/${entity}`, this.options).pipe(
-      map(data => data.map(data => new EntityModel().deserialize(data)))
-    );
-  }*/
 
 }

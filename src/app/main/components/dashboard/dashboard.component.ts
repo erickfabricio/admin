@@ -3,6 +3,9 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { EntityService } from 'src/app/entity/services/entity.service';
 import { RoleModel } from 'src/app/entity/models/role.model';
 import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeModuleModel } from 'src/app/entity/models/privilege.module.model';
+import { Router } from '@angular/router';
+import { SessionService } from '../../services/session.service';
 //const jwt = require('jsonwebtoken');
 //const jwt = require('jsonwebtoken');
 
@@ -13,45 +16,22 @@ import { UserModel } from 'src/app/entity/models/user.model';
 })
 export class DashboardComponent implements OnDestroy {
 
-  option: string;
-
   mobileQuery: MediaQueryList;
-
   private _mobileQueryListener: () => void;
 
+  option: string;
   user: UserModel;
   role: RoleModel;
 
-  showModules: boolean;
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private entityService: EntityService, private router: Router, private sessionService: SessionService) {
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private entityService: EntityService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.option = "main";
 
-    /*
-    //User
-    let userJSON = JSON.parse(localStorage.getItem("user"));
     this.user = new UserModel();
-    this.user._id = userJSON._id;
-    this.user.name = userJSON.name;
-
-    //Role
-    let roleJSON = JSON.parse(localStorage.getItem("role"));
-    this.role = new RoleModel();
-    this.role._id = roleJSON._id;
-    this.role.name = roleJSON.name;
-    this.role.privileges = roleJSON.privileges;
-
-    console.log(this.user);
-    console.log(this.role);
-    
-    this.showModules = this.role.privileges.modules.find(r => r.name = "Modules").access;
-    console.log(this.showModules);
-    */
-
-    this.getInfo();
+    this.validate();
 
   }
 
@@ -64,26 +44,38 @@ export class DashboardComponent implements OnDestroy {
     //console.log(this.option);
   }
 
-  /*
+  isAccessModule(module: string) {
+    try {
+      let access = this.role.privileges.modules.find(r => r.name == module).access;
+      //console.log(access);
+      return access;
+    } catch (ex) {
+      //console.log("Modulo: " + module + ", no definido");
+      return false;
+    }
+  }
 
-  getPrivileges() {    
-    this.entityService.find(RoleModel.entity)
-      .subscribe(role => { console.log(collections); this.role = <CollectionModel[]>collections; this.dataSource.data = this.collections });
-  }*/
+  signOut() {
+    //Api      
+    this.sessionService.signOut().subscribe(resp => {
+      console.log(resp);
+      localStorage.clear();
+      this.router.navigate(['login']);
+    });
+  }
 
-  getInfo() {
-
-    let token = localStorage.getItem("token");
-    let key = localStorage.getItem("key");
-
-    /*
-    jwt.verify(token, key, function (err, info) {
-      if (err) {
-        return { ok: false, err: err };
-      }else{
-        console.log(info);
-      }      
-    });*/
+  validate() {
+    //Api      
+    this.sessionService.validate().subscribe(resp => {
+      console.log(resp);
+      if (resp.ok) {
+        this.user = resp.data.user;
+        this.role = resp.data.role;
+      } else {
+        localStorage.clear();
+        this.router.navigate(['login']);
+      }
+    });
   }
 
 }

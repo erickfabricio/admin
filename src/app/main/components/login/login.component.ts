@@ -5,7 +5,7 @@ import { EntityService } from 'src/app/entity/services/entity.service';
 import { UserModel } from 'src/app/entity/models/user.model';
 import { SessionService } from '../../services/session.service';
 import { MainRoutingModule } from '../../main-routing.module';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'mail-main-login',
@@ -26,12 +26,14 @@ export class LoginComponent implements OnInit {
       mail: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
     });
+    localStorage.clear();
   }
 
   //************ ACTIONS OF FORM ************//
 
   login() {
     if (this.form.valid) {
+
       //Assignment of values
       this.user = new UserModel();
       this.user.mail = String(this.form.get('mail').value).trim();
@@ -43,18 +45,8 @@ export class LoginComponent implements OnInit {
         console.log(resp);
 
         if (resp.ok) {
-          //let succesMessage = resp.menssage + " token: " + resp.token;
-          //this.openSnackBar(succesMessage, "X", "snackbar-success");
-
-          //localStorage.setItem("tokenId", resp.tokenId);
           localStorage.setItem("token", resp.token);
-          localStorage.setItem("key", resp.key);
-          //localStorage.setItem("user", JSON.stringify(resp.user));
-          //localStorage.setItem("role", JSON.stringify(resp.role));          
-          
-          //Dashboard
           this.router.navigate(['dashboard']);
-
         } else {
           let succesMessage = resp.menssage;
           this.openSnackBar(succesMessage, "X", "snackbar-danger");
