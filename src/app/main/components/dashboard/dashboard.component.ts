@@ -20,8 +20,8 @@ export class DashboardComponent implements OnDestroy {
   private _mobileQueryListener: () => void;
 
   option: string;
-  user: UserModel;
-  role: RoleModel;
+  userSession: UserModel;
+  roleSession: RoleModel;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private entityService: EntityService, private router: Router, private sessionService: SessionService) {
 
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.option = "main";
 
-    this.user = new UserModel();
+    this.userSession = new UserModel();
     this.validate();
 
   }
@@ -46,7 +46,7 @@ export class DashboardComponent implements OnDestroy {
 
   isAccessModule(module: string) {
     try {
-      let access = this.role.privileges.modules.find(r => r.name == module).access;
+      let access = this.roleSession.privileges.modules.find(r => r.name == module).access;
       //console.log(access);
       return access;
     } catch (ex) {
@@ -69,8 +69,8 @@ export class DashboardComponent implements OnDestroy {
     this.sessionService.validate().subscribe(resp => {
       console.log(resp);
       if (resp.ok) {
-        this.user = resp.data.user;
-        this.role = resp.data.role;
+        this.userSession = resp.data.user;
+        this.roleSession = resp.data.role;
       } else {
         localStorage.clear();
         this.router.navigate(['login']);

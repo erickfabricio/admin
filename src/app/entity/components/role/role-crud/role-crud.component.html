@@ -127,24 +127,35 @@
                     <td mat-cell *matCellDef="let privilegeCollectionModel"> {{privilegeCollectionModel.name}} </td>
                 </ng-container>
 
-                <!-- View -->
-                <ng-container matColumnDef="view">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> View </th>
+                <!-- Create -->
+                <ng-container matColumnDef="create">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Create </th>
                     <td mat-cell *matCellDef="let privilegeCollectionModel">
-                        <mat-checkbox #checkboxView [checked]="privilegeCollectionModel.view"
-                            (change)="changePrivilegeCollection('view', privilegeCollectionModel, checkboxView.checked)">
-                            View
+                        <mat-checkbox #checkboxCreate [checked]="privilegeCollectionModel.create"
+                            (change)="changePrivilegeCollection('create', privilegeCollectionModel, checkboxCreate.checked)">
+                            Create
                         </mat-checkbox>
                     </td>
                 </ng-container>
 
-                <!-- Edit -->
-                <ng-container matColumnDef="edit">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
+                <!-- Read -->
+                <ng-container matColumnDef="read">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Read </th>
+                        <td mat-cell *matCellDef="let privilegeCollectionModel">
+                            <mat-checkbox #checkboxRead [checked]="privilegeCollectionModel.read"
+                                (change)="changePrivilegeCollection('read', privilegeCollectionModel, checkboxRead.checked)">
+                                Read
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                <!-- Update -->
+                <ng-container matColumnDef="update">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Update </th>
                     <td mat-cell *matCellDef="let privilegeCollectionModel">
-                        <mat-checkbox #checkboxEdit [checked]="privilegeCollectionModel.edit"
-                            (change)="changePrivilegeCollection('edit', privilegeCollectionModel, checkboxEdit.checked)">
-                            Edit
+                        <mat-checkbox #checkboxUpdate [checked]="privilegeCollectionModel.update"
+                            (change)="changePrivilegeCollection('update', privilegeCollectionModel, checkboxUpdate.checked)">
+                            Update
                         </mat-checkbox>
                     </td>
                 </ng-container>

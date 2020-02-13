@@ -7,13 +7,13 @@
             {{title}}
 
             <span *ngSwitchCase="'CREATE'">
-                <button type="button" class="btn btn-outline-success" (click)="onCreate()">Create</button>
+                <button type="button" class="btn btn-outline-success" (click)="onCreate()" *ngIf="pc.create">Create</button>
             </span>
 
             <span *ngSwitchCase="'CRUD'">
-                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()">Update</button>
+                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()" *ngIf="pc.update">Update</button>
 
-                <button type="button" class="btn btn-outline-danger" (click)="onDelete()">Delete</button>
+                <button type="button" class="btn btn-outline-danger" (click)="onDelete()" *ngIf="pc.delete">Delete</button>
             </span>
 
         </h4>

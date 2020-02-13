@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EntityService } from 'src/app/entity/services/entity.service';
 import { UserModel } from 'src/app/entity/models/user.model';
 import { RoleModel } from 'src/app/entity/models/role.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-user-list',
@@ -23,6 +24,10 @@ export class UserListComponent implements OnInit {
   users: UserModel[];
 
   roles: RoleModel[];
+
+  @Input('userSession') userSession: UserModel;
+  @Input('roleSession') roleSession: RoleModel;
+  pc: PrivilegeCollectionModel;
     
   constructor(private entityService: EntityService) { }
 
@@ -32,6 +37,11 @@ export class UserListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;    
     this.find();
+
+    //Privileges
+    console.log(this.roleSession);
+    this.pc = this.roleSession.privileges.collections.find(c => c._id == UserModel.ID);
+    console.log(this.pc);
   }
 
   find() {    

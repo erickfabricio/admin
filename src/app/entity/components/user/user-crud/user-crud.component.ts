@@ -9,6 +9,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 
 import { UserModel } from 'src/app/entity/models/user.model';
 import { RoleModel } from 'src/app/entity/models/role.model';
+import { Util } from 'src/app/entity/models/util';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-user-crud',
@@ -30,6 +32,10 @@ export class UserCrudComponent implements OnInit {
 
   roles: RoleModel[];
 
+  @Input('userSession') userSession: UserModel;
+  @Input('roleSession') roleSession: RoleModel;
+  pc: PrivilegeCollectionModel;
+
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -47,9 +53,14 @@ export class UserCrudComponent implements OnInit {
     }
     this.findRoles();
     this.createForm();
+
+    //Privileges
+    console.log(this.roleSession);
+    this.pc = this.roleSession.privileges.collections.find(c => c._id == UserModel.ID);
+    console.log(this.pc);
   }
 
-  findRoles() {    
+  findRoles() {
     this.entityService.find(RoleModel.entity)
       .subscribe(roles => { /*console.log(roles);*/ this.roles = <RoleModel[]>roles });
   }

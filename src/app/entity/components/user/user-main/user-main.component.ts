@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { UserListComponent } from '../user-list/user-list.component';
 import { UserCrudComponent } from '../user-crud/user-crud.component';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { RoleModel } from 'src/app/entity/models/role.model';
 
 @Component({
   selector: 'admin-entity-user-main',
@@ -16,6 +18,9 @@ export class UserMainComponent implements OnInit {
   @ViewChild("tabCrud", { static: true }) tabCrud;
   @ViewChild("crud", { static: true }) crud: UserCrudComponent;
   view: string;
+
+  @Input('userSession') userSession: UserModel;
+  @Input('roleSession') roleSession: RoleModel;
 
   constructor() { }
 

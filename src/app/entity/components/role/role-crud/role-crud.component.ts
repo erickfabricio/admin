@@ -73,7 +73,7 @@ export class RoleCrudComponent implements OnInit {
     this.findModule();
 
     //Collections
-    this.displayedColumns = ['collection', 'view', 'edit', 'delete'];
+    this.displayedColumns = ['collection', 'create', 'read', 'update', 'delete'];
     this.dataSource = new MatTableDataSource<PrivilegeCollectionModel>();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -125,8 +125,9 @@ export class RoleCrudComponent implements OnInit {
           let privilegeCollectionItem: PrivilegeCollectionModel = new PrivilegeCollectionModel();
           privilegeCollectionItem._id = collection._id;
           privilegeCollectionItem.name = collection.name;
-          privilegeCollectionItem.view = false;
-          privilegeCollectionItem.edit = false;
+          privilegeCollectionItem.create = false;
+          privilegeCollectionItem.read = false;
+          privilegeCollectionItem.update = false;
           privilegeCollectionItem.delete = false;
           this.privilegeCollectionList.push(privilegeCollectionItem);
         });
@@ -173,12 +174,14 @@ export class RoleCrudComponent implements OnInit {
           privilegeCollectionItem.name = collection.name;
 
           if (pc) {
-            privilegeCollectionItem.view = pc.view;
-            privilegeCollectionItem.edit = pc.edit;
+            privilegeCollectionItem.create = pc.create;
+            privilegeCollectionItem.read = pc.read;
+            privilegeCollectionItem.update = pc.update;
             privilegeCollectionItem.delete = pc.delete;
           } else {
-            privilegeCollectionItem.view = false;
-            privilegeCollectionItem.edit = false;
+            privilegeCollectionItem.create = false;
+            privilegeCollectionItem.read = false;
+            privilegeCollectionItem.update = false;
             privilegeCollectionItem.delete = false;
           }
 
@@ -198,11 +201,14 @@ export class RoleCrudComponent implements OnInit {
   changePrivilegeCollection(option: string, privilegeCollectionModel: PrivilegeCollectionModel, value: boolean) {
 
     switch (option) {
-      case "view":
-        privilegeCollectionModel.view = value;
+      case "create":
+        privilegeCollectionModel.create = value;
         break;
-      case "edit":
-        privilegeCollectionModel.edit = value;
+      case "read":
+        privilegeCollectionModel.read = value;
+        break;
+      case "update":
+        privilegeCollectionModel.update = value;
         break;
       case "delete":
         privilegeCollectionModel.delete = value;

@@ -3,19 +3,20 @@ import { EntityModel } from './entity.model';
 export class PrivilegeCollectionModel extends EntityModel {
 
     name: string;
-    view: boolean;
-    edit: boolean;
+    create: boolean;
+    read: boolean;
+    update: boolean;
     delete: boolean;
 
     validatePrivileges(): void {
-        if (this.edit || this.delete) {
-            this.view = true;
+        if (this.update || this.delete) {
+            this.read = true;
         }
     }
 
     static validatePrivileges(pc: PrivilegeCollectionModel): void {
-        if (pc.edit || pc.delete) {
-            pc.view = true;
+        if (pc.update || pc.delete) {
+            pc.read = true;
         }
     }
 

@@ -24,7 +24,7 @@
 
             <mat-menu #menu="matMenu">
                 
-                <span mat-menu-item>Signed in as {{user.name}}</span>
+                <span mat-menu-item>Signed in as {{userSession.name}}</span>
                 <mat-divider></mat-divider>
 
                 <button mat-menu-item>
@@ -109,7 +109,8 @@
             <admin-entity-module-main *ngSwitchCase="'ADM-Modules'"></admin-entity-module-main>
             <admin-entity-collection-main *ngSwitchCase="'ADM-Collections'"></admin-entity-collection-main>
             <admin-entity-role-main *ngSwitchCase="'ADM-Roles'"></admin-entity-role-main>
-            <admin-entity-user-main *ngSwitchCase="'ADM-Users'"></admin-entity-user-main>
+
+            <admin-entity-user-main [userSession]="userSession" [roleSession]="roleSession" *ngSwitchCase="'ADM-Users'"></admin-entity-user-main>
 
             <admin-entity-app-main *ngSwitchCase="'ADM-Apps'"></admin-entity-app-main>
             <admin-entity-token-main *ngSwitchCase="'ADM-Tokens'"></admin-entity-token-main>
