@@ -43,6 +43,13 @@
                 </mat-form-field>
             </div>
 
+            <!-- time -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.time">
+                <mat-form-field>
+                    <input matInput placeholder="Time" title="Time" type="text" formControlName="time">
+                </mat-form-field>
+            </div>
+
             <!-- state -->
             <div class="div-crud-form-input input-container" *ngIf="visibleControls.state">
                 <mat-form-field>

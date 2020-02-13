@@ -37,6 +37,7 @@ export class TokenCrudComponent implements OnInit {
     this.visibleControls = {
       id: true,
       generation: true,
+      time: true,
       state: true,
       creationDate: true
     }
@@ -47,6 +48,7 @@ export class TokenCrudComponent implements OnInit {
     this.form = new FormGroup({
       id: new FormControl({ value: '', disabled: true }),
       generation: new FormControl({ value: '', disabled: true }),
+      time: new FormControl({ value: '', disabled: true }),
       state: new FormControl('', [Validators.required]),
       creationDate: new FormControl({ value: '', disabled: true })
     });
@@ -71,6 +73,7 @@ export class TokenCrudComponent implements OnInit {
     this.visibleControls.id = false;
     this.visibleControls.creationDate = false;
     this.visibleControls.generation = false;
+    this.visibleControls.time = false;
     this.form.reset();
     this.token = null;
   }
@@ -80,6 +83,7 @@ export class TokenCrudComponent implements OnInit {
 
     this.form.get('id').setValue(this.token._id);
     this.form.get('generation').setValue(this.token.generation);
+    this.form.get('time').setValue(this.token.time);
     this.form.get('state').setValue(this.token.state);
     this.form.get('creationDate').setValue(this.token.creationDate);
 
@@ -87,6 +91,7 @@ export class TokenCrudComponent implements OnInit {
     this.visibleControls = {
       id: true,
       generation: true,
+      time: true,
       state: true,
       creationDate: true
     }
