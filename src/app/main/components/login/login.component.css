@@ -1,8 +1,15 @@
 ::ng-deep .login-container {
+  
+    position: absolute;
+    top: 100px;
+    
     max-width: 400px;
     text-align: center;
-    margin: 30px;
-    align-items: center;    
+    /*margin: 50px;*/  
+    align-items: center;  
+    
+    
+    
 }
 
 ::ng-deep .login-header.login-footer {
@@ -19,7 +26,7 @@
 }
 
 ::ng-deep .snackbar-warning {
-    color: #ff0000;
+    color: #eba000;
     background-color: #ffffff;
 }
 
@@ -27,5 +34,3 @@
     color: #ff0000;
     background-color: #ffffff;
 }
-
-/*PRUEBA*/

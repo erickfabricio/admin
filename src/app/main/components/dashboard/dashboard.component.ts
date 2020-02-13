@@ -72,7 +72,7 @@ export class DashboardComponent implements OnDestroy {
         this.userSession = resp.data.user;
         this.roleSession = resp.data.role;
       } else {
-        localStorage.clear();
+        //localStorage.clear();
         this.router.navigate(['login']);
       }
     });

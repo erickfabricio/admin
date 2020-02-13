@@ -47,3 +47,26 @@ th.mat-sort-header-sorted {
     margin: 20px;
 }
 
+
+/* Page */
+.div-background{
+    background-color: #2f7f9e5d;
+}
+
+
+/* _snackBar: MatSnackBar - Notifications*/
+
+::ng-deep .snackbar-success {
+    color:#008000;
+    background-color: #ffffff;
+}
+
+::ng-deep .snackbar-warning {
+    color: #ffa600;
+    background-color: #ffffff;
+}
+
+::ng-deep .snackbar-danger {
+    color: #ff0000;
+    background-color: #ffffff;
+}

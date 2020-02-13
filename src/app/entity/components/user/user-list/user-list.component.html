@@ -11,14 +11,14 @@
     </div>
 
     <!-- Filter -->
-    <div class="div-list-filter">
+    <div class="div-list-filter" *ngIf="pc.read">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
         </mat-form-field>
     </div>
 
     <!-- List users -->
-    <div class="div-list-table mat-elevation-z8">
+    <div class="div-list-table mat-elevation-z8" *ngIf="pc.read">
 
         <table mat-table [dataSource]="dataSource" matSort class="table-hover">
 

@@ -24,7 +24,7 @@ export class TokenListComponent implements OnInit {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-    this.displayedColumns = ['#', 'id', 'state'];
+    this.displayedColumns = ['#', 'id', 'generation', 'creation', 'state'];
     this.dataSource = new MatTableDataSource<TokenModel>();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;    

@@ -1,48 +1,52 @@
-<mat-card class="login-container container">
+<div id="div-login" color="primary">
+    
+    <mat-card class="login-container container">
 
-    <!-- HEADER -->
-    <mat-card-header class="login-header">
-        <mat-card-title>API Administration</mat-card-title>
-    </mat-card-header>
+        <!-- HEADER -->
+        <mat-card-header class="login-header">
+            <mat-card-title>API Administration</mat-card-title>
+        </mat-card-header>
 
-    <!-- BODY -->
-    <mat-card-content class="login-body">
+        <!-- BODY -->
+        <mat-card-content class="login-body">
 
-        <form [formGroup]="form" [style.fontSize.px]=15>
+            <form [formGroup]="form" [style.fontSize.px]=15>
 
-            <!-- mail -->
-            <div class="div-login-form-input input-container">
-                <mat-form-field>
-                    <input matInput placeholder="Mail" title="Mail" #inputMail type="text" formControlName="mail"
-                        maxlength="50">
-                    <mat-error *ngIf="form.get('mail').invalid">{{getErrorMessageMail()}}</mat-error>
-                    <mat-hint align="end">{{inputMail.value?.length || 0}}/50</mat-hint>
-                </mat-form-field>
-            </div>
+                <!-- mail -->
+                <div class="div-login-form-input input-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Mail" title="Mail" #inputMail type="text" formControlName="mail"
+                            maxlength="50">
+                        <mat-error *ngIf="form.get('mail').invalid">{{getErrorMessageMail()}}</mat-error>
+                        <mat-hint align="end">{{inputMail.value?.length || 0}}/50</mat-hint>
+                    </mat-form-field>
+                </div>
 
-            <!-- password -->
-            <div class="div-login-form-input input-container">
-                <mat-form-field>
-                    <input matInput placeholder="Password" title="Password" [type]="hide ? 'password' : 'text'"
-                        formControlName="password">
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide" color="primary">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                    <mat-error *ngIf="form.get('password').invalid">{{getErrorMessagePassword()}}
-                    </mat-error>
-                </mat-form-field>
-            </div>
+                <!-- password -->
+                <div class="div-login-form-input input-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Password" title="Password" [type]="hide ? 'password' : 'text'"
+                            formControlName="password">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide" color="primary">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="form.get('password').invalid">{{getErrorMessagePassword()}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
 
-        </form>
+            </form>
 
-    </mat-card-content>
+        </mat-card-content>
 
-    <!-- FOOTER -->
-    <mat-card-actions class="login-footer">
-        <button mat-stroked-button color="primary" (click)="login()">Sign in</button>
-    </mat-card-actions>
+        <!-- FOOTER -->
+        <mat-card-actions class="login-footer">
+            <button mat-stroked-button color="primary" (click)="login()">Sign in</button>
+        </mat-card-actions>
 
-    <mat-card-footer> <a href="https://erickfabricio.com" target="_black">Developed by @erickfabricio</a> </mat-card-footer>
+        <mat-card-footer> <a href="https://erickfabricio.com" target="_black">Developed by @erickfabricio</a>
+        </mat-card-footer>
 
-</mat-card>
+    </mat-card>
+</div>

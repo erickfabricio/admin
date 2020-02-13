@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EntityService } from 'src/app/entity/services/entity.service';
 import { TokenModel } from 'src/app/entity/models/token.model';
+import { RoleModel } from 'src/app/entity/models/role.model';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-token-crud',
@@ -22,27 +25,33 @@ export class TokenCrudComponent implements OnInit {
 
   hide: boolean = true;
 
+  //Session, user and role
+  @Input('userSession') userSession: UserModel;
+  @Input('roleSession') roleSession: RoleModel;
+  @Input('pc') pc: PrivilegeCollectionModel;
+
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.title = "CRUD";
     this.visibleControls = {
       id: true,
+      generation: true,
       state: true,
-      creationDate: true            
+      creationDate: true
     }
     this.createForm();
   }
 
   createForm() {
     this.form = new FormGroup({
-      id: new FormControl({ value: '', disabled: true }),      
-      //name: new FormControl('', [Validators.required, Validators.minLength(5)]),      
+      id: new FormControl({ value: '', disabled: true }),
+      generation: new FormControl({ value: '', disabled: true }),
       state: new FormControl('', [Validators.required]),
       creationDate: new FormControl({ value: '', disabled: true })
     });
   }
-  
+
   show() {
     //Action
     switch (this.action) {
@@ -61,22 +70,25 @@ export class TokenCrudComponent implements OnInit {
     this.title = "New token";
     this.visibleControls.id = false;
     this.visibleControls.creationDate = false;
+    this.visibleControls.generation = false;
     this.form.reset();
     this.token = null;
   }
 
   crud() {
     this.title = "Token";
-    
+
     this.form.get('id').setValue(this.token._id);
+    this.form.get('generation').setValue(this.token.generation);
     this.form.get('state').setValue(this.token.state);
     this.form.get('creationDate').setValue(this.token.creationDate);
-    
+
 
     this.visibleControls = {
-      id: true,      
+      id: true,
+      generation: true,
       state: true,
-      creationDate: true      
+      creationDate: true
     }
   }
 
@@ -86,9 +98,9 @@ export class TokenCrudComponent implements OnInit {
     if (this.form.valid) {
 
       //Assignment of values
-      this.token = new TokenModel();      
+      this.token = new TokenModel();
       this.token.state = String(this.form.get('state').value).trim();
-      
+
       //Api 
       this.entityService.save(TokenModel.entity, this.token)
         .subscribe(token => { console.log("New token"); this.token = <TokenModel>token; this.eventUpdateListEmitter(true) });
@@ -109,7 +121,7 @@ export class TokenCrudComponent implements OnInit {
     if (this.form.valid) {
       //Assignment of values      
       this.token.state = String(this.form.get('state').value).trim();
-      
+
       //Api 
       this.entityService.update(TokenModel.entity, this.token)
         .subscribe(token => { console.log("Update token"); this.token = <TokenModel>token });
@@ -137,16 +149,33 @@ export class TokenCrudComponent implements OnInit {
   //************ FORM VIDATION ************//
 
   validateForm() {
-    if(this.form.get('state').invalid){
+
+    if (this.form.get('generation').invalid) {
+      return this.getErrorMessageGeneration();
+    }
+
+    if (this.form.get('state').invalid) {
       return this.getErrorMessageState();
     }
-  }
-  
 
-  getErrorMessageState() {    
+  }
+
+  getErrorMessageGeneration() {
+
+    if (this.form.get('generation').hasError('required')) {
+      return 'Generation is required';
+    }
+
+    if (this.form.get('generation').hasError('minlength')) {
+      return `Minimum length is ${this.form.get('generation').errors.minlength.requiredLength} characters`;
+    }
+
+  }
+
+  getErrorMessageState() {
     if (this.form.get('state').hasError('required')) {
       return 'State is required';
-    }    
+    }
   }
 
   openSnackBar(message: string, action: string, style: string) {

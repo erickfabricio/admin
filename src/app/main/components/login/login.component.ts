@@ -1,10 +1,8 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EntityService } from 'src/app/entity/services/entity.service';
 import { UserModel } from 'src/app/entity/models/user.model';
 import { SessionService } from '../../services/session.service';
-import { MainRoutingModule } from '../../main-routing.module';
 import { Router } from '@angular/router';
 
 @Component({
@@ -95,7 +93,7 @@ export class LoginComponent implements OnInit {
       message,
       action,
       {
-        duration: 2000,
+        duration: 3000,
         verticalPosition: 'top',
         panelClass: [style]
       }
