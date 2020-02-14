@@ -10,7 +10,7 @@ export class TokenModel extends EntityModel {
     generationName: string;
     time: string;
     key: string;
-    payload: string;
+    playload: string;
     token: string;    
     signOut: Date;
     

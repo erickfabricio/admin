@@ -34,10 +34,17 @@ import { LogMainComponent } from './components/log/log-main/log-main.component';
 import { DataCrudComponent } from './components/data/data-crud/data-crud.component';
 import { DataListComponent } from './components/data/data-list/data-list.component';
 import { DataMainComponent } from './components/data/data-main/data-main.component';
+import { CatalogMainComponent } from './components/catalog/catalog-main/catalog-main.component';
+import { CatalogListComponent } from './components/catalog/catalog-list/catalog-list.component';
+import { CatalogCrudComponent } from './components/catalog/catalog-crud/catalog-crud.component';
+import { ItemMainComponent } from './components/item/item-main/item-main.component';
+import { ItemListComponent } from './components/item/item-list/item-list.component';
+import { ItemCrudComponent } from './components/item/item-crud/item-crud.component';
+
 
 
 @NgModule({
-  declarations: [EntityMainComponent, UserMainComponent, UserListComponent, UserCrudComponent, CollectionCrudComponent, CollectionListComponent, CollectionMainComponent, ModuleMainComponent, ModuleListComponent, ModuleCrudComponent, RoleMainComponent, RoleListComponent, RoleCrudComponent, AppCrudComponent, AppListComponent, AppMainComponent, TokenCrudComponent, TokenListComponent, TokenMainComponent, LogCrudComponent, LogListComponent, LogMainComponent, DataCrudComponent, DataListComponent, DataMainComponent],
+  declarations: [EntityMainComponent, UserMainComponent, UserListComponent, UserCrudComponent, CollectionCrudComponent, CollectionListComponent, CollectionMainComponent, ModuleMainComponent, ModuleListComponent, ModuleCrudComponent, RoleMainComponent, RoleListComponent, RoleCrudComponent, AppCrudComponent, AppListComponent, AppMainComponent, TokenCrudComponent, TokenListComponent, TokenMainComponent, LogCrudComponent, LogListComponent, LogMainComponent, DataCrudComponent, DataListComponent, DataMainComponent, CatalogMainComponent, CatalogListComponent, CatalogCrudComponent, ItemMainComponent, ItemListComponent, ItemCrudComponent],
   imports: [
     CommonModule,
     EntityRoutingModule,
@@ -45,7 +52,7 @@ import { DataMainComponent } from './components/data/data-main/data-main.compone
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [EntityMainComponent, CollectionMainComponent, ModuleMainComponent, RoleMainComponent, UserMainComponent, AppMainComponent, TokenMainComponent, LogMainComponent, DataMainComponent],
+  exports: [EntityMainComponent, CollectionMainComponent, ModuleMainComponent, RoleMainComponent, UserMainComponent, AppMainComponent, TokenMainComponent, LogMainComponent, DataMainComponent, CatalogMainComponent],
   entryComponents: []
 })
 export class EntityModule { }

@@ -6,6 +6,8 @@ import { TokenModel } from 'src/app/entity/models/token.model';
 import { RoleModel } from 'src/app/entity/models/role.model';
 import { UserModel } from 'src/app/entity/models/user.model';
 import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
+import { format } from 'url';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'admin-entity-token-crud',
@@ -38,6 +40,10 @@ export class TokenCrudComponent implements OnInit {
       id: true,
       generation: true,
       time: true,
+      key: true,
+      playload: true,
+      token: true,
+      signOut: true,
       state: true,
       creationDate: true
     }
@@ -49,8 +55,12 @@ export class TokenCrudComponent implements OnInit {
       id: new FormControl({ value: '', disabled: true }),
       generation: new FormControl({ value: '', disabled: true }),
       time: new FormControl({ value: '', disabled: true }),
+      key: new FormControl({ value: '', disabled: true }),
+      playload: new FormControl({ value: '', disabled: true }),
+      token: new FormControl({ value: '', disabled: true }),
+      signOut: new FormControl({ value: '', disabled: true }),
       state: new FormControl('', [Validators.required]),
-      creationDate: new FormControl({ value: '', disabled: true })
+      creationDate: new FormControl({ value: '',  disabled: true })
     });
   }
 
@@ -84,14 +94,21 @@ export class TokenCrudComponent implements OnInit {
     this.form.get('id').setValue(this.token._id);
     this.form.get('generation').setValue(this.token.generation);
     this.form.get('time').setValue(this.token.time);
+    this.form.get('key').setValue(this.token.key);
+    this.form.get('playload').setValue(this.token.playload);
+    this.form.get('token').setValue(this.token.token);
+    this.form.get('signOut').setValue(formatDate(this.token.signOut, 'MMM d, y, h:mm:ss a', 'en-US'));   
     this.form.get('state').setValue(this.token.state);
-    this.form.get('creationDate').setValue(this.token.creationDate);
-
-
+    this.form.get('creationDate').setValue(formatDate(this.token.creationDate, 'MMM d, y, h:mm:ss a', 'en-US'));
+    
     this.visibleControls = {
       id: true,
       generation: true,
       time: true,
+      key: true,
+      playload: true,
+      token: true,
+      signOut: true,
       state: true,
       creationDate: true
     }

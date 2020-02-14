@@ -100,6 +100,11 @@
                     <mat-icon color="primary">assignment</mat-icon>Entities
                 </button>
 
+                <!-- Catalog -->
+                <button mat-list-item (click)="viewOption('ADM-Catalogs')" *ngIf="isAccessModule('ADM-Catalogs')">
+                    <mat-icon color="primary">assignment</mat-icon>Catalogs
+                </button>
+
             </mat-nav-list>
 
         </mat-sidenav>
@@ -116,11 +121,11 @@
             <admin-entity-token-main *ngSwitchCase="'ADM-Tokens'"></admin-entity-token-main>
             <admin-entity-log-main *ngSwitchCase="'ADM-Logs'"></admin-entity-log-main>
             <admin-entity-data-main *ngSwitchCase="'ADM-Data'"></admin-entity-data-main>
-
             <admin-entity-main *ngSwitchCase="'ADM-Entities'"></admin-entity-main>
+            <admin-entity-catalog-main *ngSwitchCase="'ADM-Catalogs'"></admin-entity-catalog-main>
 
             <!-- Default -->
-            <admin-entity-token-main *ngSwitchDefault></admin-entity-token-main>
+            <admin-entity-catalog-main *ngSwitchDefault></admin-entity-catalog-main>
 
         </mat-sidenav-content>
 

@@ -1,0 +1,62 @@
+<div class="div-list container">
+
+    <!-- New item -->
+    <div class="div-list-header">
+        <h2>Items
+            <span>
+                <button type="button" class="btn btn-outline-success"
+                    (click)="eventCrudEmitter('CREATE')">Create</button>
+            </span>
+        </h2>
+    </div>
+
+    <!-- Filter -->
+    <div class="div-list-filter">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        </mat-form-field>
+    </div>
+
+    <!-- List items -->
+    <div class="div-list-table mat-elevation-z8">
+
+        <table mat-table [dataSource]="dataSource" matSort class="table-hover">
+
+            <!-- # -->
+            <ng-container matColumnDef="#">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+                <td mat-cell *matCellDef="let item; let i = index">
+                    {{dataSource.filteredData.indexOf(item) + 1}}
+                </td>
+            </ng-container>
+
+            <!-- Id -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+                <td mat-cell *matCellDef="let item"> {{item._id}} </td>
+            </ng-container>
+
+            <!-- Name -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+            </ng-container>
+            
+            <!-- State -->
+            <ng-container matColumnDef="state">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+                <td mat-cell *matCellDef="let item"> {{item.state}} </td>
+            </ng-container>
+
+            <!-- Header Table -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let item; columns: displayedColumns;" (click)="eventCrudEmitter('CRUD', item)"></tr>
+
+        </table>
+
+        <!-- Paginator -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </div>
+
+</div>
