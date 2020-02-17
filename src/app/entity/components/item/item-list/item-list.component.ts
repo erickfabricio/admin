@@ -11,7 +11,7 @@ import { CatalogModel } from 'src/app/entity/models/catalog.model';
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.css']
 })
-export class ItemListComponent implements OnInit, OnChanges {
+export class ItemListComponent implements OnInit {
 
   //Filter
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -27,14 +27,21 @@ export class ItemListComponent implements OnInit, OnChanges {
     this.displayedColumns = ['#', 'id', 'name', 'state'];
     this.dataSource = new MatTableDataSource<ItemModel>();
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;        
+    this.dataSource.sort = this.sort;
+    
+    if(this.catalog != null && this.catalog.list.length > 0){      
+      this.dataSource.data = this.catalog.list;
+    }
   }
 
-  ngOnChanges(){   
-    if(this.catalog != null){
+  /*
+  ngOnChanges(){
+    console.log("List");
+    console.log(this.catalog);
+    if(this.catalog != null && this.catalog.list.length > 0){      
       this.dataSource.data = this.catalog.list;
-    }        
-  }
+    }
+  }*/
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { ItemCrudComponent } from '../item-crud/item-crud.component';
@@ -22,8 +22,8 @@ export class ItemMainComponent implements OnInit {
   
   constructor() { }
 
-  ngOnInit() {
-    this.view = "LIST";
+  ngOnInit() {    
+    this.view = "LIST";    
     this.captureEventList();
     this.captureEventCrud();    
   }
@@ -37,7 +37,16 @@ export class ItemMainComponent implements OnInit {
       //Send data to CRUD
       this.crud.action = data.action;
       this.crud.item = data.item;
-      this.crud.catalog = data.catalog;
+      
+      //Otros
+      //this.crud.catalog = data.catalog;
+      /*
+      if(this.catalog != null && this.catalog.list.length > 0){
+        this.list.dataSource.data = this.catalog.list;        
+      }else{
+        this.list.dataSource.data = [];
+      }*/
+      
       this.crud.show();
 
       //Change and enable tag      
@@ -58,10 +67,12 @@ export class ItemMainComponent implements OnInit {
       
       if (isUpdateList) {
         //this.list.find();
+        this.catalog = this.crud.catalog;
       };
 
-      if (this.crud.action == "DELETE") {
+      if (this.crud.action == "DELETE") {        
         this.tabGroup.selectedIndex = 0;
+
       }
       
     });    

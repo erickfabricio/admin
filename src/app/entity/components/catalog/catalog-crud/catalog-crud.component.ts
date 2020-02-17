@@ -4,12 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EntityService } from 'src/app/entity/services/entity.service';
 import { CatalogModel } from 'src/app/entity/models/catalog.model';
 import { formatDate } from '@angular/common';
-
-
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-
+import { ItemMainComponent } from '../../item/item-main/item-main.component';
 
 @Component({
   selector: 'admin-entity-catalog-crud',
@@ -28,7 +23,11 @@ export class CatalogCrudComponent implements OnInit {
   visibleControls;
 
   hide: boolean = true;
-  
+
+  showItemList: boolean;
+
+  @ViewChild("itemMain", { static: true }) itemMain: ItemMainComponent;
+
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -38,32 +37,34 @@ export class CatalogCrudComponent implements OnInit {
       name: true,
       description: true,
       state: true,
-      creationDate: true            
+      creationDate: true
     }
     this.createForm();
   }
 
   createForm() {
     this.form = new FormGroup({
-      id: new FormControl({ value: '', disabled: true }),      
+      id: new FormControl({ value: '', disabled: true }),
       name: new FormControl('', [Validators.required, Validators.minLength(5)]),
       description: new FormControl('', [Validators.required, Validators.minLength(10)]),
       state: new FormControl('', [Validators.required]),
       creationDate: new FormControl({ value: '', disabled: true })
     });
   }
-  
+
   show() {
     //Action
     switch (this.action) {
       case "CREATE":
         this.create();
+        this.showItemList = false;
         break;
       case "CRUD":
+        this.showItemList = true;
         this.crud();
         break;
     }
-    
+
   }
 
   //************ FORM ************//
@@ -78,7 +79,7 @@ export class CatalogCrudComponent implements OnInit {
 
   crud() {
     this.title = "Catalog";
-    
+
     this.form.get('id').setValue(this.catalog._id);
     this.form.get('name').setValue(this.catalog.name);
     this.form.get('description').setValue(this.catalog.description);
@@ -90,7 +91,7 @@ export class CatalogCrudComponent implements OnInit {
       name: true,
       description: true,
       state: true,
-      creationDate: true      
+      creationDate: true
     }
   }
 
@@ -104,7 +105,7 @@ export class CatalogCrudComponent implements OnInit {
       this.catalog.name = String(this.form.get('name').value).trim();
       this.catalog.description = String(this.form.get('description').value).trim();
       this.catalog.state = String(this.form.get('state').value).trim();
-      
+
       //Api 
       this.entityService.save(CatalogModel.entity, this.catalog)
         .subscribe(catalog => { console.log("New catalog"); this.catalog = <CatalogModel>catalog; this.eventUpdateListEmitter(true) });
@@ -112,7 +113,12 @@ export class CatalogCrudComponent implements OnInit {
       //Succes
       let succesMessage = "New catalog: " + this.catalog._id;
       this.openSnackBar(succesMessage, "X", "snackbar-success");
-      this.createForm();
+      //this.createForm();
+
+      //Show CRUD and items
+      //this.action = "CRUD";
+      //this.showItemList = true;
+
     } else {
       //Error
       let errorMessage = "¡Invalid form, " + this.validateForm() + "!";
@@ -127,7 +133,7 @@ export class CatalogCrudComponent implements OnInit {
       this.catalog.name = String(this.form.get('name').value).trim();
       this.catalog.description = String(this.form.get('description').value).trim();
       this.catalog.state = String(this.form.get('state').value).trim();
-      
+
       //Api 
       this.entityService.update(CatalogModel.entity, this.catalog)
         .subscribe(catalog => { console.log("Update catalog"); this.catalog = <CatalogModel>catalog });
@@ -164,11 +170,11 @@ export class CatalogCrudComponent implements OnInit {
       return this.getErrorMessageName();
     }
 
-    if(this.form.get('state').invalid){
+    if (this.form.get('state').invalid) {
       return this.getErrorMessageState();
     }
   }
-  
+
   getErrorMessageName() {
     if (this.form.get('name').hasError('required')) {
       return 'Name is required';
@@ -187,10 +193,10 @@ export class CatalogCrudComponent implements OnInit {
     }
   }
 
-  getErrorMessageState() {    
+  getErrorMessageState() {
     if (this.form.get('state').hasError('required')) {
       return 'State is required';
-    }    
+    }
   }
 
   openSnackBar(message: string, action: string, style: string) {
@@ -213,6 +219,6 @@ export class CatalogCrudComponent implements OnInit {
       this.eventUpdateList.emit(isUpdate);
     }
   }
-  
+
 
 }

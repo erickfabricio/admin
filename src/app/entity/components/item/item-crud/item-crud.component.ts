@@ -79,8 +79,8 @@ export class ItemCrudComponent implements OnInit {
     this.form.get('id').setValue(this.item._id);
     this.form.get('name').setValue(this.item.name);
     this.form.get('description').setValue(this.item.description);
-    //this.form.get('state').setValue(this.item.state);
-    //this.form.get('creationDate').setValue(formatDate(this.item.creationDate, 'MMM d, y, h:mm:ss a', 'en-US'));
+    this.form.get('state').setValue(this.item.state);
+    this.form.get('creationDate').setValue(formatDate(this.item.creationDate, 'MMM d, y, h:mm:ss a', 'en-US'));
 
     this.visibleControls = {
       id: true,
@@ -108,20 +108,20 @@ export class ItemCrudComponent implements OnInit {
 
       if (this.catalog == null) {
         this.catalog = new CatalogModel();
-        this.catalog.list = [];
-        this.catalog.name = null;
-        this.catalog.name = null;
+        //this.catalog.list = [];
+        //this.catalog.name = null;              
       }
 
+      //Api - Update
       this.catalog.list.push(this.item);
-
-      this.entityService.save(CatalogModel.entity, this.catalog)
-        .subscribe(catalog => { console.log("New item"); console.log(this.catalog); this.catalog = <CatalogModel>catalog; this.eventUpdateListEmitter(true) });
+      this.entityService.update(CatalogModel.entity, this.catalog)
+        .subscribe(catalog => { console.log("Create item - Update list"); console.log(this.catalog); this.catalog = <CatalogModel>catalog; this.eventUpdateListEmitter(true) });
 
       //Succes
       let succesMessage = "New item: " + this.item._id;
       this.openSnackBar(succesMessage, "X", "snackbar-success");
       this.createForm();
+
     } else {
       //Error
       let errorMessage = "¡Invalid form, " + this.validateForm() + "!";
@@ -153,11 +153,11 @@ export class ItemCrudComponent implements OnInit {
 
   onDelete() {
     this.action = "DELETE";
-    
+
     //Api - Update
     this.catalog.list = this.catalog.list.filter(item => item._id !== this.item._id);
     this.entityService.update(CatalogModel.entity, this.catalog)
-      .subscribe(catalog => { console.log("Delete item - Update list"); console.log(this.catalog); this.catalog = <CatalogModel>catalog });
+      .subscribe(catalog => { console.log("Delete item - Update list"); console.log(this.catalog); this.catalog = <CatalogModel>catalog; this.eventUpdateListEmitter(true) });
 
     //Succes
     let succesMessage = "Delete item: " + this.item._id;
