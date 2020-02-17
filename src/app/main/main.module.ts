@@ -9,10 +9,13 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ProfileComponent } from './components/profile/profile.component';
+import { HelpComponent } from './components/help/help.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, SignUpComponent, LoginComponent],
+  declarations: [DashboardComponent, SignUpComponent, LoginComponent, ProfileComponent, HelpComponent, NotFoundComponent],
   imports: [
     CommonModule,
     MainRoutingModule,        

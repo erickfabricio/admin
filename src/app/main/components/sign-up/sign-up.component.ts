@@ -5,7 +5,7 @@ import { EntityService } from 'src/app/entity/services/entity.service';
 import { UserModel } from 'src/app/entity/models/user.model';
 
 @Component({
-  selector: 'mail-main-sign-up',
+  selector: 'admin-main-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })

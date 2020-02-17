@@ -52,7 +52,7 @@ import { ItemCrudComponent } from './components/item/item-crud/item-crud.compone
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [EntityMainComponent, CollectionMainComponent, ModuleMainComponent, RoleMainComponent, UserMainComponent, AppMainComponent, TokenMainComponent, LogMainComponent, DataMainComponent, CatalogMainComponent],
+  exports: [EntityMainComponent, CollectionMainComponent, ModuleMainComponent, RoleMainComponent, UserMainComponent, AppMainComponent, TokenMainComponent, LogMainComponent, DataMainComponent, CatalogMainComponent, UserCrudComponent],
   entryComponents: []
 })
 export class EntityModule { }

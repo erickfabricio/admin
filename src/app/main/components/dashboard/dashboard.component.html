@@ -27,12 +27,12 @@
                 <span mat-menu-item>Signed in as {{userSession.name}}</span>
                 <mat-divider></mat-divider>
 
-                <button mat-menu-item>
+                <button mat-menu-item (click)="viewOption('ADM-Profile')">
                     <mat-icon>perm_identity</mat-icon>
                     <span>Profile</span>
                 </button>
 
-                <button mat-menu-item>
+                <button mat-menu-item (click)="viewOption('ADM-Help')">
                     <mat-icon>help_outline</mat-icon>
                     <span>Help</span>
                 </button>
@@ -123,6 +123,10 @@
             <admin-entity-data-main *ngSwitchCase="'ADM-Data'"></admin-entity-data-main>
             <admin-entity-main *ngSwitchCase="'ADM-Entities'"></admin-entity-main>
             <admin-entity-catalog-main *ngSwitchCase="'ADM-Catalogs'"></admin-entity-catalog-main>
+
+            <!-- Main -->
+            <admin-main-profile [userSession]="userSession" [roleSession]="roleSession" *ngSwitchCase="'ADM-Profile'"></admin-main-profile>
+            <admin-main-help *ngSwitchCase="'ADM-Help'"></admin-main-help>
 
             <!-- Default -->
             <admin-entity-catalog-main *ngSwitchDefault></admin-entity-catalog-main>

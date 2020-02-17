@@ -10,7 +10,7 @@ import { SessionService } from '../../services/session.service';
 //const jwt = require('jsonwebtoken');
 
 @Component({
-  selector: 'mail-main-dashboard',
+  selector: 'admin-main-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })

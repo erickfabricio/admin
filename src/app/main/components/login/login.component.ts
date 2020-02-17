@@ -6,7 +6,7 @@ import { SessionService } from '../../services/session.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'mail-main-login',
+  selector: 'admin-main-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
