@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EntityService } from 'src/app/entity/services/entity.service';
 import { CollectionModel } from 'src/app/entity/models/collection.model';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-collection-list',
@@ -20,6 +22,10 @@ export class CollectionListComponent implements OnInit {
 
   //List
   collections: CollectionModel[];
+
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
     
   constructor(private entityService: EntityService) { }
 

@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EntityService } from 'src/app/entity/services/entity.service';
 import { LogModel } from 'src/app/entity/models/log.model';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-log-crud',
@@ -22,6 +24,10 @@ export class LogCrudComponent implements OnInit {
 
   hide: boolean = true;
 
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
+  
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {

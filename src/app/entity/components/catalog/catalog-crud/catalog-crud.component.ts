@@ -5,6 +5,8 @@ import { EntityService } from 'src/app/entity/services/entity.service';
 import { CatalogModel } from 'src/app/entity/models/catalog.model';
 import { formatDate } from '@angular/common';
 import { ItemMainComponent } from '../../item/item-main/item-main.component';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-catalog-crud',
@@ -27,6 +29,10 @@ export class CatalogCrudComponent implements OnInit {
   showItemList: boolean;
 
   @ViewChild("itemMain", { static: true }) itemMain: ItemMainComponent;
+
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
@@ -56,11 +62,11 @@ export class CatalogCrudComponent implements OnInit {
     //Action
     switch (this.action) {
       case "CREATE":
-        this.create();
         this.showItemList = false;
+        this.create();
         break;
       case "CRUD":
-        this.showItemList = true;
+        this.showItemList = true;                        
         this.crud();
         break;
     }
@@ -85,7 +91,7 @@ export class CatalogCrudComponent implements OnInit {
     this.form.get('description').setValue(this.catalog.description);
     this.form.get('state').setValue(this.catalog.state);
     this.form.get('creationDate').setValue(formatDate(this.catalog.creationDate, 'MMM d, y, h:mm:ss a', 'en-US'));
-    
+
     this.visibleControls = {
       id: true,
       name: true,

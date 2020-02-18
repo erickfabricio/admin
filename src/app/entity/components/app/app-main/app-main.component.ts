@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { AppListComponent } from '../app-list/app-list.component';
 import { AppCrudComponent } from '../app-crud/app-crud.component';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-app-main',
@@ -16,6 +18,10 @@ export class AppMainComponent implements OnInit {
   @ViewChild("tabCrud", { static: true }) tabCrud;
   @ViewChild("crud", { static: true }) crud: AppCrudComponent;
   view: string;
+
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor() { }
 

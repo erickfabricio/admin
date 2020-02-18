@@ -12,6 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 import { PrivilegeModuleModel } from 'src/app/entity/models/privilege.module.model';
+import { UserModel } from 'src/app/entity/models/user.model';
 
 
 @Component({
@@ -49,6 +50,10 @@ export class RoleCrudComponent implements OnInit {
   displayedColumns: string[];
   dataSource: MatTableDataSource<PrivilegeCollectionModel>;
   privilegeCollectionList: PrivilegeCollectionModel[];
+
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
@@ -286,7 +291,7 @@ export class RoleCrudComponent implements OnInit {
       };
 
       this.role.privileges = privileges;
-      this.role.validatePrivileges();
+      //this.role.validatePrivileges();
 
       //Api 
       this.entityService.save(RoleModel.entity, this.role)
@@ -319,7 +324,7 @@ export class RoleCrudComponent implements OnInit {
 
       this.role.privileges = privileges;
 
-      RoleModel.validatePrivileges(this.role);
+      //RoleModel.validatePrivileges(this.role);
       //this.role.validatePrivileges();
 
       //Api 

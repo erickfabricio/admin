@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DataListComponent } from '../data-list/data-list.component';
 import { DataCrudComponent } from '../data-crud/data-crud.component';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-data-main',
@@ -16,6 +18,10 @@ export class DataMainComponent implements OnInit {
   @ViewChild("tabCrud", { static: true }) tabCrud;
   @ViewChild("crud", { static: true }) crud: DataCrudComponent;
   view: string;
+
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor() { }
 

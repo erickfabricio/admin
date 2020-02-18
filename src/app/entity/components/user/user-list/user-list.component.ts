@@ -25,9 +25,9 @@ export class UserListComponent implements OnInit {
 
   roles: RoleModel[];
 
+  //Session
   @Input('userSession') userSession: UserModel;
-  @Input('roleSession') roleSession: RoleModel;
-  pc: PrivilegeCollectionModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
     
   constructor(private entityService: EntityService) { }
 
@@ -37,11 +37,6 @@ export class UserListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;    
     this.find();
-
-    //Privileges
-    console.log(this.roleSession);
-    this.pc = this.roleSession.privileges.collections.find(c => c._id == UserModel.ID);
-    console.log(this.pc);
   }
 
   find() {    

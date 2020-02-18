@@ -2,56 +2,56 @@
 
     <mat-tab label="Module">
         <div class="container-mat-tab">
-            <admin-entity-module-main></admin-entity-module-main>
+            <admin-entity-module-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.modules')"></admin-entity-module-main>
         </div>
     </mat-tab>
-
+    
     <mat-tab label="Collection">
         <div class="container-mat-tab">
-            <admin-entity-collection-main></admin-entity-collection-main>
+            <admin-entity-collection-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.collections')"></admin-entity-collection-main>
         </div>
     </mat-tab>
 
     <mat-tab label="Role">
         <div class="container-mat-tab">
-            <admin-entity-role-main></admin-entity-role-main>
+            <admin-entity-role-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.roles')"></admin-entity-role-main>
         </div>
     </mat-tab>
 
     <mat-tab label="User">
         <div class="container-mat-tab">
-            <admin-entity-user-main></admin-entity-user-main>
+            <admin-entity-user-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.users')"></admin-entity-user-main>
         </div>
     </mat-tab>
 
     <mat-tab label="App">
         <div class="container-mat-tab">
-            <admin-entity-app-main></admin-entity-app-main>
+            <admin-entity-app-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.apps')"></admin-entity-app-main>
         </div>
     </mat-tab>
 
     <mat-tab label="Token">
         <div class="container-mat-tab">
-            <admin-entity-token-main></admin-entity-token-main>
+            <admin-entity-token-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.tokens')"></admin-entity-token-main>
         </div>
     </mat-tab>
 
     <mat-tab label="Log">
         <div class="container-mat-tab">
-            <admin-entity-log-main></admin-entity-log-main>
+            <admin-entity-log-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.logs')"></admin-entity-log-main>
         </div>
     </mat-tab>
 
     <mat-tab label="Data">
         <div class="container-mat-tab">
-            <admin-entity-data-main></admin-entity-data-main>
+            <admin-entity-data-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.data')"></admin-entity-data-main>
         </div>
     </mat-tab>
 
     <mat-tab label="Catalog">
         <div class="container-mat-tab">
-            <admin-entity-catalog-main></admin-entity-catalog-main>
+            <admin-entity-catalog-main [userSession]="userSession" [privilegeCollectionSession]="getPrivilege('adm.catalogs')"></admin-entity-catalog-main>
         </div>
-    </mat-tab>
+    </mat-tab>    
 
 </mat-tab-group>

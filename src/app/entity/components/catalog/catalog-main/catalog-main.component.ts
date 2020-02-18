@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CatalogListComponent } from '../catalog-list/catalog-list.component';
 import { CatalogCrudComponent } from '../catalog-crud/catalog-crud.component';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-catalog-main',
@@ -16,6 +18,10 @@ export class CatalogMainComponent implements OnInit {
   @ViewChild("tabCrud", { static: true }) tabCrud;
   @ViewChild("crud", { static: true }) crud: CatalogCrudComponent;
   view: string;
+
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor() { }
 
@@ -33,7 +39,7 @@ export class CatalogMainComponent implements OnInit {
 
       //Send data to CRUD
       this.crud.action = data.action;
-      this.crud.catalog = data.catalog;
+      this.crud.catalog = data.catalog;      
       this.crud.show();
 
       //Change and enable tag      

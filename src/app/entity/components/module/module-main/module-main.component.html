@@ -5,13 +5,13 @@
 
     <mat-tab label="List" #tabList select>
         <div class="container-mat-tab">
-            <admin-entity-module-list #list></admin-entity-module-list>
+            <admin-entity-module-list #list [userSession]="userSession" [privilegeCollectionSession]="privilegeCollectionSession"></admin-entity-module-list>
         </div>
     </mat-tab>
 
     <mat-tab label="" #tabCrud disabled>
         <div class="container-mat-tab">
-            <admin-entity-module-crud #crud></admin-entity-module-crud>
+            <admin-entity-module-crud #crud [userSession]="userSession" [privilegeCollectionSession]="privilegeCollectionSession"></admin-entity-module-crud>
         </div>
     </mat-tab>
 

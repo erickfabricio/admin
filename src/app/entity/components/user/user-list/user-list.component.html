@@ -3,22 +3,22 @@
     <!-- New user -->
     <div class="div-list-header">
         <h2>Users
-            <span>
+            <span *ngIf="privilegeCollectionSession.read">
                 <button type="button" class="btn btn-outline-success"
-                    (click)="eventCrudEmitter('CREATE')" *ngIf="pc.create">Create</button>
+                    (click)="eventCrudEmitter('CREATE')">Create</button>
             </span>
         </h2>
     </div>
 
     <!-- Filter -->
-    <div class="div-list-filter" *ngIf="pc.read">
+    <div class="div-list-filter" *ngIf="privilegeCollectionSession.read">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
         </mat-form-field>
     </div>
 
     <!-- List users -->
-    <div class="div-list-table mat-elevation-z8" *ngIf="pc.read">
+    <div class="div-list-table mat-elevation-z8" *ngIf="privilegeCollectionSession.read">
 
         <table mat-table [dataSource]="dataSource" matSort class="table-hover">
 

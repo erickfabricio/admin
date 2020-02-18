@@ -26,11 +26,10 @@ export class TokenCrudComponent implements OnInit {
   visibleControls;
 
   hide: boolean = true;
-
-  //Session, user and role
+  
+  //Session
   @Input('userSession') userSession: UserModel;
-  @Input('roleSession') roleSession: RoleModel;
-  @Input('pc') pc: PrivilegeCollectionModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 

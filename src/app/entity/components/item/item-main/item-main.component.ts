@@ -18,7 +18,8 @@ export class ItemMainComponent implements OnInit {
   @ViewChild("crud", { static: true }) crud: ItemCrudComponent;
   view: string;
 
-  @Input('catalog') catalog: CatalogModel;
+  //@Input('catalog') catalog: CatalogModel;
+  //catalog: CatalogModel;
   
   constructor() { }
 
@@ -36,17 +37,7 @@ export class ItemMainComponent implements OnInit {
 
       //Send data to CRUD
       this.crud.action = data.action;
-      this.crud.item = data.item;
-      
-      //Otros
-      //this.crud.catalog = data.catalog;
-      /*
-      if(this.catalog != null && this.catalog.list.length > 0){
-        this.list.dataSource.data = this.catalog.list;        
-      }else{
-        this.list.dataSource.data = [];
-      }*/
-      
+      this.crud.item = data.item;      
       this.crud.show();
 
       //Change and enable tag      
@@ -67,7 +58,7 @@ export class ItemMainComponent implements OnInit {
       
       if (isUpdateList) {
         //this.list.find();
-        this.catalog = this.crud.catalog;
+        //this.catalog = this.crud.catalog;
       };
 
       if (this.crud.action == "DELETE") {        

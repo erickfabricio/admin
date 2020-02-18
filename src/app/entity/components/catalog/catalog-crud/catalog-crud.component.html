@@ -7,13 +7,13 @@
             {{title}}
 
             <span *ngSwitchCase="'CREATE'">
-                <button type="button" class="btn btn-outline-success" (click)="onCreate()">Create</button>
+                <button type="button" class="btn btn-outline-success" (click)="onCreate()" *ngIf="privilegeCollectionSession.create">Create</button>
             </span>
 
             <span *ngSwitchCase="'CRUD'">
-                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()">Update</button>
+                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()" *ngIf="privilegeCollectionSession.update">Update</button>
 
-                <button type="button" class="btn btn-outline-danger" (click)="onDelete()">Delete</button>
+                <button type="button" class="btn btn-outline-danger" (click)="onDelete()" *ngIf="privilegeCollectionSession.delete">Delete</button>
             </span>
 
         </h4>
@@ -72,7 +72,7 @@
     </div>
 
     <!-- Item List 
-    <admin-entity-item-main [catalog]="catalog" *ngIf="showItemList" #itemMain></admin-entity-item-main>
+    <admin-entity-item-main *ngIf="showItemList" #itemMain></admin-entity-item-main>
     -->
 
 </div>

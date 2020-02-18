@@ -19,6 +19,10 @@ export class ItemListComponent implements OnInit {
   displayedColumns: string[];
   dataSource: MatTableDataSource<ItemModel>;
 
+  //List
+  items: ItemModel[];
+
+  //catalog: CatalogModel;
   @Input('catalog') catalog: CatalogModel;
     
   constructor(private entityService: EntityService) { }
@@ -28,10 +32,12 @@ export class ItemListComponent implements OnInit {
     this.dataSource = new MatTableDataSource<ItemModel>();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    
-    if(this.catalog != null && this.catalog.list.length > 0){      
-      this.dataSource.data = this.catalog.list;
-    }
+    //this.find();
+  }
+
+  find() {
+    this.items = this.catalog.list;
+    this.dataSource.data = this.items;
   }
 
   /*

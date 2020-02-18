@@ -4,6 +4,7 @@ import { UserListComponent } from '../user-list/user-list.component';
 import { UserCrudComponent } from '../user-crud/user-crud.component';
 import { UserModel } from 'src/app/entity/models/user.model';
 import { RoleModel } from 'src/app/entity/models/role.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-user-main',
@@ -19,8 +20,9 @@ export class UserMainComponent implements OnInit {
   @ViewChild("crud", { static: true }) crud: UserCrudComponent;
   view: string;
 
+  //Session
   @Input('userSession') userSession: UserModel;
-  @Input('roleSession') roleSession: RoleModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor() { }
 

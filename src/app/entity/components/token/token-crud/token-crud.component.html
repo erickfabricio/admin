@@ -8,14 +8,14 @@
             {{title}}
 
             <span *ngSwitchCase="'CREATE'">
-                <button type="button" class="btn btn-outline-success" (click)="onCreate()">Create</button>
+                <button type="button" class="btn btn-outline-success" (click)="onCreate()" *ngIf="privilegeCollectionSession.create">Create</button>
             </span>
 
             <span *ngSwitchCase="'CRUD'">
                 <br>
-                <button type="button" class="btn btn-outline-warning col-1" (click)="onUpdate()">Update</button>
+                <button type="button" class="btn btn-outline-warning col-1" (click)="onUpdate()" *ngIf="privilegeCollectionSession.update">Update</button>
                 <span class="col-1"></span>
-                <button type="button" class="btn btn-outline-danger col-1" (click)="onDelete()">Delete</button>
+                <button type="button" class="btn btn-outline-danger col-1" (click)="onDelete()" *ngIf="privilegeCollectionSession.delete">Delete</button>
             </span>
 
         </h4>

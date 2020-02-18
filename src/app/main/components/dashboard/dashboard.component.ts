@@ -6,6 +6,7 @@ import { UserModel } from 'src/app/entity/models/user.model';
 import { PrivilegeModuleModel } from 'src/app/entity/models/privilege.module.model';
 import { Router } from '@angular/router';
 import { SessionService } from '../../services/session.service';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 //const jwt = require('jsonwebtoken');
 //const jwt = require('jsonwebtoken');
 
@@ -14,25 +15,27 @@ import { SessionService } from '../../services/session.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnDestroy {
-
+export class DashboardComponent implements OnInit, OnDestroy {
+  
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
   option: string;
+
+  //Session
   userSession: UserModel;
   roleSession: RoleModel;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private entityService: EntityService, private router: Router, private sessionService: SessionService) {
-
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.option = "main";
+  }
 
+  ngOnInit(): void {
     this.userSession = new UserModel();
     this.validate();
-
   }
 
   ngOnDestroy(): void {
@@ -71,11 +74,21 @@ export class DashboardComponent implements OnDestroy {
       if (resp.ok) {
         this.userSession = resp.data.user;
         this.roleSession = resp.data.role;
+        //console.log(this.userSession);
+        //console.log(this.roleSession);
       } else {
         //localStorage.clear();
         this.router.navigate(['login']);
       }
     });
+  }
+
+  getPrivilege(collectionName: string): PrivilegeCollectionModel{
+    //Privileges
+    //console.log(this.roleSession);
+    let pc : PrivilegeCollectionModel = this.roleSession.privileges.collections.find(c => c.name == collectionName);
+    //console.log(pc);
+    return pc;
   }
 
 }

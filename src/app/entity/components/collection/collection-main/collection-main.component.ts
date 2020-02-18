@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CollectionListComponent } from '../collection-list/collection-list.component';
 import { CollectionCrudComponent } from '../collection-crud/collection-crud.component';
+import { UserModel } from 'src/app/entity/models/user.model';
+import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
 
 @Component({
   selector: 'admin-entity-collection-main',
@@ -17,6 +19,10 @@ export class CollectionMainComponent implements OnInit {
   @ViewChild("crud", { static: true }) crud: CollectionCrudComponent;
   view: string;
 
+  //Session
+  @Input('userSession') userSession: UserModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
+  
   constructor() { }
 
   ngOnInit() {

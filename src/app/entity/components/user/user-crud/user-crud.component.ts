@@ -32,9 +32,9 @@ export class UserCrudComponent implements OnInit {
 
   roles: RoleModel[];
 
+  //Session
   @Input('userSession') userSession: UserModel;
-  @Input('roleSession') roleSession: RoleModel;
-  pc: PrivilegeCollectionModel;
+  @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
 
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
@@ -53,11 +53,6 @@ export class UserCrudComponent implements OnInit {
     }
     this.findRoles();
     this.createForm();
-
-    //Privileges
-    console.log(this.roleSession);
-    this.pc = this.roleSession.privileges.collections.find(c => c._id == UserModel.ID);
-    console.log(this.pc);
   }
 
   findRoles() {
