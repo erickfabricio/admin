@@ -41,11 +41,23 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail </th>
                 <td mat-cell *matCellDef="let user"> {{user.mail}} </td>
             </ng-container>
-        
+
+            <!-- Role -->
+            <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+                <td mat-cell *matCellDef="let user"> {{ getRole(user) }} </td>
+            </ng-container>
+
             <!-- State -->
             <ng-container matColumnDef="state">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
                 <td mat-cell *matCellDef="let user"> {{user.state}} </td>
+            </ng-container>
+            
+            <!-- Creation Date -->
+            <ng-container matColumnDef="creation">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Creation </th>
+                <td mat-cell *matCellDef="let user"> {{user.creationDate | date:'medium'}} </td>
             </ng-container>
 
             <!-- Header Table -->

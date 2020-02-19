@@ -77,6 +77,8 @@
             <div class="div-crud-form-input input-container" *ngIf="visibleControls.creationDate">
                 <mat-form-field>
                     <input matInput placeholder="Creation Date" title="Creation Date" type="text" formControlName="creationDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker" disabled></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
 
@@ -84,6 +86,8 @@
             <div class="div-crud-form-input input-container" *ngIf="visibleControls.signOut">
                 <mat-form-field>
                     <input matInput placeholder="Sign Out" title="Sign Out" type="text" formControlName="signOut">
+                    <mat-datepicker-toggle matSuffix [for]="picker" disabled></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
 

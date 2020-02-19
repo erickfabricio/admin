@@ -1,16 +1,11 @@
-import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EntityService } from 'src/app/entity/services/entity.service';
-
-
-import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
-
 import { UserModel } from 'src/app/entity/models/user.model';
 import { RoleModel } from 'src/app/entity/models/role.model';
-import { Util } from 'src/app/entity/models/util';
 import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'admin-entity-user-crud',
@@ -30,7 +25,9 @@ export class UserCrudComponent implements OnInit {
 
   hide: boolean = true;
 
+  //Aux
   roles: RoleModel[];
+  creator: UserModel;
 
   //Session
   @Input('userSession') userSession: UserModel;
@@ -44,15 +41,18 @@ export class UserCrudComponent implements OnInit {
       id: true,
       name: true,
       mail: true,
+      hash: true,
       password: true,
       description: true,
       creationDate: true,
       state: true,
-      role: true
+      role: true,
+      creator: true
 
     }
     this.findRoles();
     this.createForm();
+
   }
 
   findRoles() {
@@ -65,15 +65,15 @@ export class UserCrudComponent implements OnInit {
       id: new FormControl({ value: '', disabled: true }),
       name: new FormControl('', [Validators.required, Validators.minLength(5)]),
       mail: new FormControl('', [Validators.required, Validators.email]),
+      hash: new FormControl({ value: '', disabled: true }),
       password: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required, Validators.minLength(10)]),
       creationDate: new FormControl({ value: '', disabled: true }),
       state: new FormControl('', [Validators.required]),
-      role: new FormControl('', [Validators.required])
+      role: new FormControl('', [Validators.required]),
+      creator: new FormControl({ value: '', disabled: true })
     });
   }
-
-
 
   show() {
     //Action
@@ -103,22 +103,26 @@ export class UserCrudComponent implements OnInit {
     this.form.get('id').setValue(this.user._id);
     this.form.get('name').setValue(this.user.name);
     this.form.get('mail').setValue(this.user.mail);
+    this.form.get('hash').setValue(this.user.hash);
     this.form.get('password').setValue(this.user.password);
     this.form.get('description').setValue(this.user.description);
-    this.form.get('creationDate').setValue(this.user.creationDate);
+    this.form.get('creationDate').setValue(formatDate(this.user.creationDate, 'MMM d, y, h:mm:ss a', 'en-US'));
     this.form.get('state').setValue(this.user.state);
 
     this.form.get('role').setValue(this.user.role);
+    this.form.get('creator').setValue(`${this.creator._id} - ${this.creator.name}`);
 
     this.visibleControls = {
       id: true,
       name: true,
       mail: true,
+      hash: true,
       password: true,
       description: true,
       creationDate: true,
       state: true,
-      role: true
+      role: true,
+      creator: true
     }
   }
 
@@ -135,15 +139,26 @@ export class UserCrudComponent implements OnInit {
       this.user.description = String(this.form.get('description').value).trim();
       this.user.state = String(this.form.get('state').value).trim();
       this.user.role = String(this.form.get('role').value).trim();
+      this.user.creator = this.userSession._id;
 
-      //Api 
-      this.entityService.save(UserModel.entity, this.user)
-        .subscribe(user => { console.log("New user"); this.user = <UserModel>user; this.eventUpdateListEmitter(true) });
+      //Api      
+      this.entityService.request('post', UserModel.entity, this.user)
+        .subscribe(res => {
+          console.log(res);
+          if (res.ok) {
+            //Success
+            this.user = <UserModel>res.user;
+            let succesMessage = "New user: " + this.user.name;
+            this.openSnackBar(succesMessage, "X", "snackbar-success");
+            this.createForm();
+            this.eventUpdateListEmitter(true);
+          } else {
+            //Error
+            let errorMessage = "¡Error, " + res.menssage + "!";
+            this.openSnackBar(errorMessage, "X", "snackbar-danger");
+          }          
+        });
 
-      //Succes
-      let succesMessage = "New user: " + this.user.name;
-      this.openSnackBar(succesMessage, "X", "snackbar-success");
-      this.createForm();
     } else {
       //Error
       let errorMessage = "¡Invalid form, " + this.validateForm() + "!";
@@ -164,13 +179,27 @@ export class UserCrudComponent implements OnInit {
       console.log(String(this.form.get('role').value).trim());
       this.user.role = String(this.form.get('role').value).trim();
 
-      //Api 
-      this.entityService.update(UserModel.entity, this.user)
-        .subscribe(user => { console.log("Update user"); this.user = <UserModel>user });
+      //Api      
+      this.entityService.request('put', UserModel.entity, this.user)
+        .subscribe(res => {
+          console.log(res);
+          if (res.ok) {
+            //Success
+            this.user = <UserModel>res.user;
+            let succesMessage = "Update user: " + this.user.name;
+            this.openSnackBar(succesMessage, "X", "snackbar-success");
 
-      //Succes
-      let succesMessage = "Update user: " + this.user.name;
-      this.openSnackBar(succesMessage, "X", "snackbar-success");
+            //Update view hash
+            //this.form.get('hash').setValue(this.user.hash);
+            this.crud();
+
+          } else {
+            //Error
+            let errorMessage = "¡Error, " + res.menssage + "!";
+            this.openSnackBar(errorMessage, "X", "snackbar-danger");
+          }
+        });
+
     } else {
       //Error
       let errorMessage = "¡Invalid form, " + this.validateForm() + "!";
@@ -268,7 +297,7 @@ export class UserCrudComponent implements OnInit {
       message,
       action,
       {
-        duration: 2000,
+        duration: 3000,
         verticalPosition: 'top',
         panelClass: [style]
       }

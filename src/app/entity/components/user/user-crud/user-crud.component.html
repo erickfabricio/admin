@@ -7,13 +7,16 @@
             {{title}}
 
             <span *ngSwitchCase="'CREATE'">
-                <button type="button" class="btn btn-outline-success" (click)="onCreate()" *ngIf="privilegeCollectionSession.create">Create</button>
+                <button type="button" class="btn btn-outline-success" (click)="onCreate()"
+                    *ngIf="privilegeCollectionSession.create">Create</button>
             </span>
 
             <span *ngSwitchCase="'CRUD'">
-                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()" *ngIf="privilegeCollectionSession.update">Update</button>
+                <button type="button" class="btn btn-outline-warning" (click)="onUpdate()"
+                    *ngIf="privilegeCollectionSession.update">Update</button>
 
-                <button type="button" class="btn btn-outline-danger" (click)="onDelete()" *ngIf="privilegeCollectionSession.delete">Delete</button>
+                <button type="button" class="btn btn-outline-danger" (click)="onDelete()"
+                    *ngIf="privilegeCollectionSession.delete">Delete</button>
             </span>
 
         </h4>
@@ -48,7 +51,7 @@
                     <mat-hint align="end">{{inputMail.value?.length || 0}}/100</mat-hint>
                 </mat-form-field>
             </div>
-
+            
             <!-- password -->
             <div class="div-crud-form-input input-container" *ngIf="visibleControls.password">
                 <mat-form-field>
@@ -71,18 +74,7 @@
                     <mat-hint align="end">{{inputDescription.value?.length || 0}}/100</mat-hint>
                 </mat-form-field>
             </div>
-
-
-            <!-- date -->
-            <div class="div-crud-form-input input-container" *ngIf="visibleControls.creationDate">
-                <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Date" title="Date"
-                        formControlName="creationDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-
+            
             <!-- state -->
             <div class="div-crud-form-input input-container" *ngIf="visibleControls.state">
                 <mat-form-field>
@@ -102,6 +94,30 @@
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="form.get('role').invalid">{{getErrorMessageRole()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- hash -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.hash">
+                <mat-form-field>
+                    <input matInput placeholder="Hash" title="Hash" type="text" formControlName="hash">
+                </mat-form-field>
+            </div>
+
+            <!-- creationDate -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.creationDate">
+                <mat-form-field>
+                    <input matInput placeholder="Creation Date" title="Creation Date" type="text"
+                        formControlName="creationDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker" disabled></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <!-- creator -->
+            <div class="div-crud-form-input input-container" *ngIf="visibleControls.creator">
+                <mat-form-field>
+                    <input matInput placeholder="Creator" title="Creator" type="text" formControlName="creator">
                 </mat-form-field>
             </div>
 

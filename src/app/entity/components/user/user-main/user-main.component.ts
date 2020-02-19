@@ -37,10 +37,12 @@ export class UserMainComponent implements OnInit {
       //Data      
       //console.log(data.action);
       //console.log(data.user);
+      //console.log(data);
 
       //Send data to CRUD
       this.crud.action = data.action;
       this.crud.user = data.user;
+      this.crud.creator = data.creator;      
       this.crud.show();
 
       //Change and enable tag      
