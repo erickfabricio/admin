@@ -29,40 +29,40 @@ export class UserListComponent implements OnInit {
   //Session
   @Input('userSession') userSession: UserModel;
   @Input('privilegeCollectionSession') privilegeCollectionSession: PrivilegeCollectionModel;
-    
+
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
     this.displayedColumns = ['#', 'name', 'mail', 'role', 'creation', 'state'];
     this.dataSource = new MatTableDataSource<UserModel>();
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;    
+    this.dataSource.sort = this.sort;
     this.find();
     this.findRoles();
   }
 
-  find() {    
+  find() {
     this.entityService.find(UserModel.entity)
       .subscribe(users => { /*console.log(users);*/ this.users = <UserModel[]>users; this.dataSource.data = this.users });
   }
 
-  findRoles() {    
+  findRoles() {
     this.entityService.find(RoleModel.entity)
-      .subscribe(roles => { this.roles = <RoleModel[]>roles});
+      .subscribe(roles => { this.roles = <RoleModel[]>roles });
   }
 
-  getRole(user: UserModel): String{
+  getRole(user: UserModel): String {
     let roleName = "";
-    let role : RoleModel = this.roles.find(r => r._id == user.role);
+    let role: RoleModel = this.roles.find(r => r._id == user.role);
     //console.log(role);
-    if(role){
+    if (role) {
       roleName = role.name;
     }
     return roleName;
   }
 
-  getCreator(user: UserModel): UserModel{    
-    let creator : UserModel = this.users.find(u => u._id == user.creator);
+  getCreator(user: UserModel): UserModel {
+    let creator: UserModel = this.users.find(u => u._id == user.creator);
     //console.log(creator);
     return creator;
   }
@@ -73,9 +73,17 @@ export class UserListComponent implements OnInit {
 
   //************ EVENTS ************//
   @Output() eventCrud = new EventEmitter<any>();
-  eventCrudEmitter(action: string, user: UserModel) {    
-    let creator: UserModel = this.getCreator(user);
-    return this.eventCrud.emit({action, user, creator});
+  eventCrudEmitter(action: string, user: UserModel) {
+    
+    let creator: UserModel;
+
+    if (action == "CREATE") {
+      creator = this.userSession;
+    } else {
+      creator = this.getCreator(user);      
+    }
+
+    return this.eventCrud.emit({ action, user, creator });
   }
 
 }

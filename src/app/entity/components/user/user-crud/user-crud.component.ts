@@ -93,6 +93,7 @@ export class UserCrudComponent implements OnInit {
     this.title = "New user";
     this.visibleControls.id = false;
     this.visibleControls.creationDate = false;
+    this.visibleControls.creator = false;
     this.form.reset();
     this.user = null;
   }
@@ -139,7 +140,7 @@ export class UserCrudComponent implements OnInit {
       this.user.description = String(this.form.get('description').value).trim();
       this.user.state = String(this.form.get('state').value).trim();
       this.user.role = String(this.form.get('role').value).trim();
-      this.user.creator = this.userSession._id;
+      this.user.creator = this.creator._id;
 
       //Api      
       this.entityService.request('post', UserModel.entity, this.user)

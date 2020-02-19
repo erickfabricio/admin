@@ -6,6 +6,7 @@ import { ModuleModel } from 'src/app/entity/models/module.model';
 import { UserModel } from 'src/app/entity/models/user.model';
 import { RoleModel } from 'src/app/entity/models/role.model';
 import { PrivilegeCollectionModel } from 'src/app/entity/models/privilege.collection.model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'admin-entity-module-crud',
@@ -82,7 +83,7 @@ export class ModuleCrudComponent implements OnInit {
     this.form.get('name').setValue(this.module.name);        
     this.form.get('description').setValue(this.module.description);    
     this.form.get('state').setValue(this.module.state);
-    this.form.get('creationDate').setValue(this.module.creationDate);
+    this.form.get('creationDate').setValue(formatDate(this.module.creationDate, 'MMM d, y, h:mm:ss a', 'en-US'));
     
 
     this.visibleControls = {
