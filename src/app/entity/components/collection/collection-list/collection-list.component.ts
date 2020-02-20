@@ -30,7 +30,7 @@ export class CollectionListComponent implements OnInit {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-    this.displayedColumns = ['#', 'id', 'name', 'state'];
+    this.displayedColumns = ['#', 'name', 'description', 'creation', 'state'];
     this.dataSource = new MatTableDataSource<CollectionModel>();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;    
