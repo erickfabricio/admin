@@ -12,42 +12,29 @@ import { CatalogModel } from 'src/app/entity/models/catalog.model';
   styleUrls: ['./item-list.component.css']
 })
 export class ItemListComponent implements OnInit {
-
+  
   //Filter
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[];
   dataSource: MatTableDataSource<ItemModel>;
 
-  //List
-  items: ItemModel[];
-
-  //catalog: CatalogModel;
-  @Input('catalog') catalog: CatalogModel;
-    
+  catalog: CatalogModel;
+            
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-    this.displayedColumns = ['#', 'id', 'name', 'state'];
+    this.displayedColumns = ['#', 'id', 'name', 'state'];    
+  }
+
+  find(catalog: CatalogModel) {
+    //Init
     this.dataSource = new MatTableDataSource<ItemModel>();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    //this.find();
+    this.catalog = catalog;
+    this.dataSource.data = this.catalog.list;
   }
-
-  find() {
-    this.items = this.catalog.list;
-    this.dataSource.data = this.items;
-  }
-
-  /*
-  ngOnChanges(){
-    console.log("List");
-    console.log(this.catalog);
-    if(this.catalog != null && this.catalog.list.length > 0){      
-      this.dataSource.data = this.catalog.list;
-    }
-  }*/
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

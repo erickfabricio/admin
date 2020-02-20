@@ -23,8 +23,8 @@ export class ItemCrudComponent implements OnInit {
 
   hide: boolean = true;
 
-  item: ItemModel;
   catalog: CatalogModel;
+  item: ItemModel;
 
   constructor(private entityService: EntityService, private _snackBar: MatSnackBar) { }
 
@@ -51,6 +51,10 @@ export class ItemCrudComponent implements OnInit {
   }
 
   show() {
+    //console.log("ItemCrud-show");
+    //console.log(this.item);
+    //console.log(this.catalog);
+
     //Action
     switch (this.action) {
       case "CREATE":
@@ -102,23 +106,18 @@ export class ItemCrudComponent implements OnInit {
       this.item.description = String(this.form.get('description').value).trim();
       this.item.state = String(this.form.get('state').value).trim();
 
-      //Api
-      console.log(this.catalog);
-      console.log(this.catalog == null);
-
-      if (this.catalog == null) {
-        this.catalog = new CatalogModel();
-        //this.catalog.list = [];
-        //this.catalog.name = null;              
-      }
-
       //Api - Update
       this.catalog.list.push(this.item);
       this.entityService.update(CatalogModel.entity, this.catalog)
-        .subscribe(catalog => { console.log("Create item - Update list"); console.log(this.catalog); this.catalog = <CatalogModel>catalog; this.eventUpdateListEmitter(true) });
+        .subscribe(catalog => {
+          //console.log("Create item - Update list");
+          //console.log(this.catalog);
+          this.catalog = <CatalogModel>catalog;
+          this.eventUpdateListEmitter(true);
+        });
 
       //Succes
-      let succesMessage = "New item: " + this.item._id;
+      let succesMessage = "New item: " + this.item.name;
       this.openSnackBar(succesMessage, "X", "snackbar-success");
       this.createForm();
 
@@ -132,14 +131,26 @@ export class ItemCrudComponent implements OnInit {
   onUpdate() {
     //Check if there were changes    
     if (this.form.valid) {
+
+      let index = this.catalog.list.indexOf(this.item);
+      //console.log(index);
+
       //Assignment of values
       this.item.name = String(this.form.get('name').value).trim();
       this.item.description = String(this.form.get('description').value).trim();
       this.item.state = String(this.form.get('state').value).trim();
 
-      //Api       
+      //Api - Update
+      this.catalog.list[index] = this.item;
       this.entityService.update(CatalogModel.entity, this.catalog)
-        .subscribe(catalog => { console.log("Update item"); console.log(this.catalog); this.catalog = <CatalogModel>catalog });
+        .subscribe(catalog => {
+          //console.log("Update list");
+          //console.log(this.catalog);
+          //console.log(this.item);
+          this.catalog = <CatalogModel>catalog;
+          this.item = this.catalog.list[index];
+          this.eventUpdateListEmitter(true);
+        });
 
       //Succes
       let succesMessage = "Update item: " + this.item._id;
@@ -149,6 +160,7 @@ export class ItemCrudComponent implements OnInit {
       let errorMessage = "¡Invalid form, " + this.validateForm() + "!";
       this.openSnackBar(errorMessage, "X", "snackbar-danger");
     }
+
   }
 
   onDelete() {
@@ -157,7 +169,12 @@ export class ItemCrudComponent implements OnInit {
     //Api - Update
     this.catalog.list = this.catalog.list.filter(item => item._id !== this.item._id);
     this.entityService.update(CatalogModel.entity, this.catalog)
-      .subscribe(catalog => { console.log("Delete item - Update list"); console.log(this.catalog); this.catalog = <CatalogModel>catalog; this.eventUpdateListEmitter(true) });
+      .subscribe(catalog => {
+        //console.log("Delete item - Update list");
+        //console.log(this.catalog);
+        this.catalog = <CatalogModel>catalog;
+        this.eventUpdateListEmitter(true);
+      });
 
     //Succes
     let succesMessage = "Delete item: " + this.item._id;
@@ -219,10 +236,11 @@ export class ItemCrudComponent implements OnInit {
 
   //************ EVENTS ************//
   //Process
-  @Output() eventUpdateList = new EventEmitter<boolean>();
+  @Output() eventUpdateList = new EventEmitter<any>();
   eventUpdateListEmitter(isUpdate: boolean) {
     if (isUpdate) {
-      this.eventUpdateList.emit(isUpdate);
+      var data = { isUpdate: isUpdate, catalog: this.catalog };
+      this.eventUpdateList.emit(data);
     }
   }
 

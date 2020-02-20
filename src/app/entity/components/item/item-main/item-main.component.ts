@@ -9,7 +9,8 @@ import { CatalogModel } from 'src/app/entity/models/catalog.model';
   templateUrl: './item-main.component.html',
   styleUrls: ['./item-main.component.css']
 })
-export class ItemMainComponent implements OnInit {
+export class ItemMainComponent implements OnInit, OnChanges {
+  
 
   @ViewChild("tabGroup", { static: true }) tabGroup;
   @ViewChild("tabList", { static: true }) tabList;
@@ -18,7 +19,7 @@ export class ItemMainComponent implements OnInit {
   @ViewChild("crud", { static: true }) crud: ItemCrudComponent;
   view: string;
 
-  //@Input('catalog') catalog: CatalogModel;
+  @Input('catalog') catalog: CatalogModel;
   //catalog: CatalogModel;
   
   constructor() { }
@@ -29,6 +30,13 @@ export class ItemMainComponent implements OnInit {
     this.captureEventCrud();    
   }
 
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    //console.log("ItemMain-ngOnChanges");
+    //console.log(this.catalog);
+    this.list.catalog = this.catalog;
+    this.list.find(this.catalog);
+  }
+
   captureEventList() {
     this.list.eventCrud.pipe().subscribe(data => {
       //Data      
@@ -37,7 +45,8 @@ export class ItemMainComponent implements OnInit {
 
       //Send data to CRUD
       this.crud.action = data.action;
-      this.crud.item = data.item;      
+      this.crud.item = data.item;
+      this.crud.catalog = this.catalog;              
       this.crud.show();
 
       //Change and enable tag      
@@ -52,18 +61,18 @@ export class ItemMainComponent implements OnInit {
   }
 
   captureEventCrud() {
-    this.crud.eventUpdateList.pipe().subscribe(isUpdateList => {
-      //Data
-      //console.item("Update list:" + isUpdateList);
+    this.crud.eventUpdateList.pipe().subscribe(data => {
+      //Data      
+      console.log(data);
       
-      if (isUpdateList) {
-        //this.list.find();
-        //this.catalog = this.crud.catalog;
+      if (data.isUpdate) {        
+        this.catalog = data.catalog;
+        this.list.catalog = this.catalog;
+        this.list.find(this.catalog);
       };
 
       if (this.crud.action == "DELETE") {        
         this.tabGroup.selectedIndex = 0;
-
       }
       
     });    

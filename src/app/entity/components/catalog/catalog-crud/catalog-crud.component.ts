@@ -26,9 +26,8 @@ export class CatalogCrudComponent implements OnInit {
 
   hide: boolean = true;
 
-  showItemList: boolean;
-
   @ViewChild("itemMain", { static: true }) itemMain: ItemMainComponent;
+  showItemList: boolean;
 
   //Session
   @Input('userSession') userSession: UserModel;
@@ -139,6 +138,10 @@ export class CatalogCrudComponent implements OnInit {
       this.catalog.name = String(this.form.get('name').value).trim();
       this.catalog.description = String(this.form.get('description').value).trim();
       this.catalog.state = String(this.form.get('state').value).trim();
+
+      console.log(this.catalog.list);
+      //this.catalog.list = this.itemMain.catalog.list;
+      console.log(this.catalog.list);
 
       //Api 
       this.entityService.update(CatalogModel.entity, this.catalog)
